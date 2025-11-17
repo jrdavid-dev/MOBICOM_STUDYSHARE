@@ -1,5 +1,6 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
+import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
@@ -17,5 +18,12 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         uploadTypeTv.text = material.type
         uploadDateTv.text = material.date
         uploadAuthorTv.text = "by ${material.author}"
+
+        itemView.setOnClickListener {
+            val intent = Intent(itemView.context, MaterialDetailsActivity::class.java)
+            // TODO : add IntentPutExtra to populate MaterialDetails
+            itemView.context.startActivity(intent)
+        }
+
     }
 }

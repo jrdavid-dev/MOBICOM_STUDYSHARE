@@ -29,7 +29,9 @@
         <activity
             android:name=".CourseDetailsActivity"
             android:exported="true"/>
-
+        <activity
+            android:name=".MaterialDetailsActivity"
+            android:exported="true"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

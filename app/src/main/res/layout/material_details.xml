@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F8FAFC"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/materialDetailsHeaderTv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Material Details"
+        android:textSize="18sp" />
+
+    <FrameLayout
+        android:layout_width="372dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_frame">
+
+        <ImageView
+            android:id="@+id/notebookIv"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/notebook" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/MaterialDetailsTitleTv"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Material Title"
+        android:textSize="18sp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="372dp"
+        android:layout_height="195dp"
+        android:layout_gravity="center"
+        android:background="@drawable/materialdetails_frame">
+
+        <ImageView
+            android:id="@+id/materialCourseIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/book"
+            app:tint="#600F172A" />
+
+        <TextView
+            android:id="@+id/materialDetailsHeaderCourseTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Course"
+            android:textColor="#600F172A"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialCourseIv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/MaterialDetailsCourseTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Computer Architecture"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialCourseIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderCourseTv" />
+
+        <TextView
+            android:id="@+id/materialDetailsHeaderTypeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Type"
+            android:textColor="#600F172A"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsCourseTypeIv"
+            app:layout_constraintTop_toBottomOf="@+id/MaterialDetailsCourseTv" />
+
+        <TextView
+            android:id="@+id/materialDetailsCourseTypeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Handouts"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsCourseTypeIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderTypeTv" />
+
+        <ImageView
+            android:id="@+id/materialDetailsCourseTypeIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCourseIv"
+            app:srcCompat="@drawable/notebook"
+            app:tint="#600F172A" />
+
+        <ImageView
+            android:id="@+id/materialDetailsAuthorIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsCourseTypeIv"
+            app:srcCompat="@drawable/person"
+            app:tint="#600F172A" />
+
+        <TextView
+            android:id="@+id/materialDetailsAuthorHeaderTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Uploaded By"
+            android:textColor="#600F172A"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsAuthorIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsCourseTypeTv" />
+
+        <TextView
+            android:id="@+id/materialDetailsAuthorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Miguel Salvador"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsAuthorIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorHeaderTv" />
+
+        <ImageView
+            android:id="@+id/materialDetailsDateIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorIv"
+            app:srcCompat="@drawable/date"
+            app:tint="#600F172A" />
+
+        <TextView
+            android:id="@+id/materialDetailsHeaderDateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Date"
+            android:textColor="#600F172A"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsDateIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorTv" />
+
+        <TextView
+            android:id="@+id/materialDetailsDateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="October 2, 2025"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsDateIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderDateTv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/downloadBtn"
+        android:layout_width="372dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/gradient_button"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/stat_sys_download_done"
+                android:tint="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Download Material"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
