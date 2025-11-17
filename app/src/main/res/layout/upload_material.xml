@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F8FAFC"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/uploadMaterialHeaderTv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="22dp"
+        android:text="Upload Material"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="372dp"
+        android:layout_height="575dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_uploadmaterial"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="332dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_dotted_uploadmaterial"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/profileTextBtn"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#600891B2" />
+
+            <TextView
+                android:id="@+id/profileNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="Tap to Select File"
+                android:textColor="#6B6D71"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/profileDescriptionTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="PDF, JPG, DOCX, PNG"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/uploadMaterialTitleEv"
+            android:layout_width="332dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_text"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Name"
+            android:textColor="#D1D5DB" />
+
+        <EditText
+            android:id="@+id/uploadMaterialDescriptionEV"
+            android:layout_width="332dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_text"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Description"
+            android:textColor="#D1D5DB" />
+
+        <EditText
+            android:id="@+id/uploadMaterialCourseNameTv"
+            android:layout_width="332dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_text"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Course"
+            android:textColor="#D1D5DB" />
+
+        <EditText
+            android:id="@+id/uploadMaterialTypeEv"
+            android:layout_width="332dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_text"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Material Type"
+            android:textColor="#D1D5DB" />
+
+        <EditText
+            android:id="@+id/uploadMaterialTopicEv"
+            android:layout_width="332dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_text"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Topic"
+            android:textColor="#D1D5DB" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/uploadBtn"
+        android:layout_width="372dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/gradient_button"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/stat_sys_upload_done"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Upload Material"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
