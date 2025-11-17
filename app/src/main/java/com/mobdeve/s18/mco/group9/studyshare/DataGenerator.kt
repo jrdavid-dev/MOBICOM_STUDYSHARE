@@ -2,13 +2,13 @@ package com.mobdeve.s18.mco.group9.studyshare
 
 class DataGenerator {
     companion object {
-        private val course1 : Course = Course("Mobile Computing", 12)
-        private val course2 : Course = Course("Computer Architecture", 14)
+        private val course1: Course = Course("Mobile Computing", "Introduction to mobile app development",12)
+        private val course2: Course = Course("Computer Architecture", "Study of computer hardware and organization",12)
 
-        private val course3 : Course = Course("Mobile Computing", 12)
-        private val course4 : Course = Course("Computer Architecture", 14)
+        private val course3: Course = Course("Mobile Computing",  "Introduction to mobile app development",12)
+        private val course4: Course = Course("Computer Architecture",  "Study of computer hardware and organization",12)
 
-        private val course5 : Course = Course("Computer Architecture", 14)
+        private val course5: Course = Course("Computer Architecture",  "Study of computer hardware and organization",12)
 
         private val material1 = Material("SQL Joins and Queries", "Lecture Notes", "2 days ago", "Jose David")
         private val material2 = Material("Introduction to Data Structures", "Handouts", "5 days ago", "Hanielle Chua")

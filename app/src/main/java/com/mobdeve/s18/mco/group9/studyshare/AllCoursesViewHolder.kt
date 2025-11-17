@@ -12,7 +12,7 @@ class AllCoursesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun bindData(course: Course) {
         courseNameTv.text = course.courseName
-        courseDetailsTv.text = "Data Structures, Algorithms"
+        courseDetailsTv.text = course.courseDetails
         courseTotalTv.text = "${course.nTotal} Materials"
     }
 }
