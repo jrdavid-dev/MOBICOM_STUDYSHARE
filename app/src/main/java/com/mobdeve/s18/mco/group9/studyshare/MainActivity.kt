@@ -36,9 +36,20 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewBinding.seeAllUploadsTv.setOnClickListener(View.OnClickListener{
-            val intent = Intent(applicationContext, AllCoursesActivity::class.java)
+            val intent = Intent(applicationContext, RecentUploadsActivity::class.java)
             this.startActivity(intent)
         })
+
+        viewBinding.fabUploadBtn.setOnClickListener(View.OnClickListener{
+            val intent = Intent(applicationContext, UploadMaterialActivity::class.java)
+            this.startActivity(intent)
+        })
+
+        viewBinding.manageSubsTv.setOnClickListener(View.OnClickListener{
+            val intent = Intent(applicationContext, ManageSubscriptionsActivity::class.java)
+            this.startActivity(intent)
+        })
+
 
 
 

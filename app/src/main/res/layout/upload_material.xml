@@ -73,9 +73,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_text"
             android:ems="10"
-            android:inputType="text"
-            android:text="Name"
-            android:textColor="#D1D5DB" />
+            android:hint="Name"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/uploadMaterialDescriptionEV"
@@ -85,9 +84,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_text"
             android:ems="10"
-            android:inputType="text"
-            android:text="Description"
-            android:textColor="#D1D5DB" />
+            android:hint="Description"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/uploadMaterialCourseNameTv"
@@ -96,22 +94,28 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_text"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Course"
-            android:textColor="#D1D5DB" />
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:hint="Course Name"
+            android:clickable="true"
+            android:focusable="true"
+            android:drawableEnd="@android:drawable/arrow_down_float"  />
 
-        <EditText
-            android:id="@+id/uploadMaterialTypeEv"
+        <TextView
+            android:id="@+id/uploadMaterialTypeTv"
             android:layout_width="332dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_text"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Material Type"
-            android:textColor="#D1D5DB" />
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:hint="Material Type"
+            android:clickable="true"
+            android:focusable="true"
+            android:drawableEnd="@android:drawable/arrow_down_float" />
 
         <EditText
             android:id="@+id/uploadMaterialTopicEv"
@@ -121,9 +125,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_text"
             android:ems="10"
-            android:inputType="text"
-            android:text="Topic"
-            android:textColor="#D1D5DB" />
+            android:hint="Topic"
+            android:inputType="text" />
 
     </LinearLayout>
 

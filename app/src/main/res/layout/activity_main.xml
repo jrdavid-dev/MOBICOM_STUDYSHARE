@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8FAFC"
+    app:circularflow_radiusInDP="50dp"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -47,7 +48,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/searchContainer"
+            android:id="@+id/manageSubscriptionsSearchContainer"
             android:layout_width="370dp"
             android:layout_height="43dp"
             android:layout_gravity="center"
@@ -167,8 +168,24 @@
         android:id="@+id/uploadsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        app:layout_constraintTop_toBottomOf="@+id/recentUploadsTv"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recentUploadsTv">
 
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabUploadBtn"
+        style="@style/FloatingActionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:src="@drawable/add"
+        app:tint="@android:color/white"
+        app:backgroundTint="#0891B2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

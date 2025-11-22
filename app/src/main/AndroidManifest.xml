@@ -24,13 +24,21 @@
             android:name=".SearchPageActivity"
             android:exported="true"/>
         <activity
-            android:name=".AllCoursesActivity"
+            android:name=".RecentUploadsActivity"
             android:exported="true"/>
         <activity
             android:name=".CourseDetailsActivity"
             android:exported="true"/>
         <activity
             android:name=".MaterialDetailsActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".UploadMaterialActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".ManageSubscriptionsActivity"
             android:exported="true"/>
         <meta-data
             android:name="preloaded_fonts"

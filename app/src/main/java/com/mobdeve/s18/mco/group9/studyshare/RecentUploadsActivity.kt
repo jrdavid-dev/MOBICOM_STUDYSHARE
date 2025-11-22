@@ -3,20 +3,20 @@ package com.mobdeve.s18.mco.group9.studyshare
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mobdeve.s18.mco.group9.studyshare.databinding.AllCoursesBinding
+import com.mobdeve.s18.mco.group9.studyshare.databinding.RecentUploadsBinding
 
-class AllCoursesActivity : AppCompatActivity() {
+class RecentUploadsActivity : AppCompatActivity() {
 
-    private val course : ArrayList<Course> = DataGenerator.generateCourse()
+    private val material : ArrayList<Material> = DataGenerator.generateUpload()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
-        val viewBinding: AllCoursesBinding = AllCoursesBinding.inflate(layoutInflater)
+        val viewBinding: RecentUploadsBinding = RecentUploadsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.allCoursesRecyclerView.adapter = AllCoursesAdapter(this.course)
+        viewBinding.allCoursesRecyclerView.adapter = MaterialAdapter(this.material)
         viewBinding.allCoursesRecyclerView.layoutManager = LinearLayoutManager(this)
 
     }

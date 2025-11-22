@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class AllCoursesAdapter(private val data: ArrayList<Course>): RecyclerView.Adapter<AllCoursesViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllCoursesViewHolder {
+class ManageSubscriptionsAdapter(private val data: ArrayList<Course>): RecyclerView.Adapter<ManageSubscriptionsViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManageSubscriptionsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.courses_layout, parent, false)
-        return AllCoursesViewHolder(view)
+        return ManageSubscriptionsViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: AllCoursesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ManageSubscriptionsViewHolder, position: Int) {
         holder.bindData(data.get(position))
 
     }

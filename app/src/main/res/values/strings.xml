@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StudyShare</string>
+    <string name="material_type_prompt">Select Material Type</string>
 </resources>

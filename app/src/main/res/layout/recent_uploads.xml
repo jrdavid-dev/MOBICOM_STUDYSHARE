@@ -18,7 +18,7 @@
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center_vertical"
-            android:text="All Courses"
+            android:text="Recent Uploads"
             android:textSize="18sp" />
     </FrameLayout>
 

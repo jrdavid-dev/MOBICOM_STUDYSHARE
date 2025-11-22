@@ -9,13 +9,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
+        android:paddingBottom="10dp"
         tools:layout_editor_absoluteX="358dp"
         tools:layout_editor_absoluteY="-75dp">
 
         <LinearLayout
-            android:id="@+id/searchContainer"
+            android:id="@+id/manageSubscriptionsSearchContainer"
             android:layout_width="325dp"
             android:layout_height="43dp"
             android:layout_gravity="left"
@@ -70,6 +71,67 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/searchPageAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_searchpage_buttons"
+            android:backgroundTint="#0891B2"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="All"
+            android:textColor="#FFFDFD"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/manageSubscriptionsSearchContainer" />
+
+        <TextView
+            android:id="@+id/searchPageLectureNotesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_searchpage_buttons"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Lecture Notes"
+            android:textColor="#600F172A"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/searchPageAllBtn"
+            app:layout_constraintTop_toBottomOf="@+id/manageSubscriptionsSearchContainer" />
+
+        <TextView
+            android:id="@+id/searchPageHandoutsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_searchpage_buttons"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Handouts"
+            android:textColor="#600F172A"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/searchPageLectureNotesBtn"
+            app:layout_constraintTop_toBottomOf="@+id/manageSubscriptionsSearchContainer" />
+
+        <TextView
+            android:id="@+id/searchPageReviewersBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_searchpage_buttons"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Reviewers"
+            android:textColor="#600F172A"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/searchPageHandoutsBtn"
+            app:layout_constraintTop_toBottomOf="@+id/manageSubscriptionsSearchContainer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
