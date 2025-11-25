@@ -2,9 +2,9 @@ package com.mobdeve.s18.mco.group9.studyshare
 
 import android.content.Intent
 import android.view.View
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import com.mobdeve.s18.mco.group9.studyshare.models.Course
 
 
 class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -14,7 +14,7 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
     fun bindData(course: Course) {
 
         courseTitleTv.text = course.courseName
-        courseTotalTv.text = "${course.nTotal} Materials"
+        courseTotalTv.text = "${course.materialCount} Materials"
 
         itemView.setOnClickListener {
             val intent = Intent(itemView.context, CourseDetailsActivity::class.java)

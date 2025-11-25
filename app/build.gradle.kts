@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
     alias(libs.plugins.kotlin.android)
 }
 
@@ -40,6 +41,10 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

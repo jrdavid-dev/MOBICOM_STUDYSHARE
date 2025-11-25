@@ -3,6 +3,7 @@ package com.mobdeve.s18.mco.group9.studyshare
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s18.mco.group9.studyshare.models.Course
 
 class CourseAdapter(private val data: ArrayList<Course>): RecyclerView.Adapter<CourseViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
@@ -20,3 +21,4 @@ class CourseAdapter(private val data: ArrayList<Course>): RecyclerView.Adapter<C
         return data.size
     }
 }
+

@@ -19,6 +19,7 @@
         android:textSize="18sp" />
 
     <FrameLayout
+        android:id="@+id/colormMaterialDetailsFrame"
         android:layout_width="372dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
@@ -62,29 +63,29 @@
             app:tint="#600F172A" />
 
         <TextView
-            android:id="@+id/materialDetailsHeaderCourseTv"
+            android:id="@+id/materialHeaderNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Course"
+            android:text="Material Name"
             android:textColor="#600F172A"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/materialCourseIv"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/MaterialDetailsCourseTv"
+            android:id="@+id/materialNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Computer Architecture"
+            android:text="TextView"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/materialCourseIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderCourseTv" />
+            app:layout_constraintTop_toBottomOf="@+id/materialHeaderNameTv" />
 
         <TextView
             android:id="@+id/materialDetailsHeaderTypeTv"
@@ -96,23 +97,23 @@
             android:text="Type"
             android:textColor="#600F172A"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsCourseTypeIv"
-            app:layout_constraintTop_toBottomOf="@+id/MaterialDetailsCourseTv" />
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsTypeIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialNameTv" />
 
         <TextView
-            android:id="@+id/materialDetailsCourseTypeTv"
+            android:id="@+id/materialDetailsTypeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Handouts"
+            android:text="TextView"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsCourseTypeIv"
+            app:layout_constraintStart_toEndOf="@+id/materialDetailsTypeIv"
             app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderTypeTv" />
 
         <ImageView
-            android:id="@+id/materialDetailsCourseTypeIv"
+            android:id="@+id/materialDetailsTypeIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="15dp"
@@ -129,7 +130,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsCourseTypeIv"
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsTypeIv"
             app:srcCompat="@drawable/person"
             app:tint="#600F172A" />
 
@@ -144,7 +145,7 @@
             android:textColor="#600F172A"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/materialDetailsAuthorIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsCourseTypeTv" />
+            app:layout_constraintTop_toBottomOf="@+id/materialDetailsTypeTv" />
 
         <TextView
             android:id="@+id/materialDetailsAuthorTv"
@@ -153,7 +154,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Miguel Salvador"
+            android:text="TextView"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/materialDetailsAuthorIv"
             app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorHeaderTv" />
@@ -189,7 +190,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="October 2, 2025"
+            android:text="TextView"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/materialDetailsDateIv"
             app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderDateTv" />
