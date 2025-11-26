@@ -10,11 +10,13 @@
     android:background="@drawable/rounded_upload">
 
     <FrameLayout
+        android:id="@+id/colorManageSubsFrame"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_frame">
+        android:background="@drawable/rounded_frame"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/notebookIv"
@@ -26,7 +28,7 @@
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -37,8 +39,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto_medium"
+            android:maxWidth="200dp"
             android:text="TextView"
-            android:textSize="16sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,8 +50,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto"
+            android:maxWidth="200dp"
             android:text="TextView"
             android:textColor="#7F0F172A"
             android:textSize="10sp"
@@ -56,14 +60,13 @@
             app:layout_constraintTop_toBottomOf="@+id/courseTitleTv" />
 
         <TextView
-            android:id="@+id/courseTotalTv"
+            android:id="@+id/courseMaterialCountTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto"
             android:text="TextView"
-            android:textColor="#CC0F172A"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/courseDetailsTv" />
@@ -78,11 +81,24 @@
             android:background="@drawable/rounded_subscribe"
             android:fontFamily="@font/roboto_medium"
             android:text="Subscribe"
-            android:textColor="#FFFFFF"
+            android:textColor="#7F0F172A"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/courseDetailsAuthorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto"
+            android:text="TextView"
+            android:textColor="#7F0F172A"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/courseMaterialCountTv"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsTv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -75,7 +75,7 @@ android:background="@drawable/rounded_upload">
     </LinearLayout>
 
     <TextView
-        android:id="@+id/courseTotalTv"
+        android:id="@+id/courseMaterialCountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

@@ -15,7 +15,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val uploadTitleTv: TextView = itemView.findViewById(R.id.courseTitleTv)
     private val uploadTypeTv: TextView = itemView.findViewById(R.id.uploadTypeTv)
     private val uploadDateTv: TextView = itemView.findViewById(R.id.courseDetailsTv)
-    private val uploadAuthorTv: TextView = itemView.findViewById(R.id.courseTotalTv)
+    private val uploadAuthorTv: TextView = itemView.findViewById(R.id.courseMaterialCountTv)
     private val colorMaterialFrame: FrameLayout = itemView.findViewById(R.id.colorMaterialFrame)
 
     fun bindData(material: Material) {

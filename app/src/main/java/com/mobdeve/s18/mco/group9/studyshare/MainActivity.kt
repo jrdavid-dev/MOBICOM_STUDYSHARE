@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var materialAdapter : MaterialAdapter
+    private lateinit var courseAdapter: CourseAdapter
     private val current_user_id = "1001"
 
     companion object {
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         viewBinding.uploadsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // SUBS ADAPTER
-        val courseAdapter = CourseAdapter(subscribedCourses)
+        courseAdapter = CourseAdapter(subscribedCourses)
         viewBinding.subsRecyclerView.adapter = courseAdapter
         viewBinding.subsRecyclerView.layoutManager = GridLayoutManager(this, 2)
 
@@ -101,35 +102,40 @@ class MainActivity : AppCompatActivity() {
                     subscription.getString(MyFirestoreReferences.COURSE_ID_FIELD)
                 }
 
+                if (subscriptionCourseIds.isEmpty()) {
+                    Log.d("MAIN_ACTIVITY", "No Subscriptions found")
+                } else {
+                    db.collection(MyFirestoreReferences.COURSES_COLLECTION)
+                        .whereIn("id", subscriptionCourseIds.map { it.toLong() })
+                        .get()
+                        .addOnSuccessListener { sub_courses ->
+                            subscribedCourses.clear()
 
-                db.collection(MyFirestoreReferences.COURSES_COLLECTION)
-                    .whereIn("id", subscriptionCourseIds.map { it.toLong() })
-                    .get()
-                    .addOnSuccessListener { sub_courses ->
-                        subscribedCourses.clear()
-
-                        for(sub_course in sub_courses.documents){
-                            val course = sub_course.toObject(Course::class.java)
-                            if(course != null){
-                                subscribedCourses.add(course)
+                            for (sub_course in sub_courses.documents) {
+                                val course = sub_course.toObject(Course::class.java)
+                                if (course != null) {
+                                    subscribedCourses.add(course)
+                                }
                             }
+                            courseAdapter.notifyDataSetChanged()
+                            Log.d("MAIN_ACTIVITY", "Loaded ${subscribedCourses.size} courses")
                         }
-                        courseAdapter.notifyDataSetChanged()
-                        Log.d("MAIN_ACTIVITY", "Loaded ${subscribedCourses.size} courses")
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.w("MAIN_ACTIVITY", "Error getting courses", exception)
-                    }
+                        .addOnFailureListener { exception ->
+                            Log.w("MAIN_ACTIVITY", "Error getting courses", exception)
+                        }
+                }
             }
             .addOnFailureListener { exception ->
                 Log.w("MAIN_ACTIVITY", "Error getting courses", exception)
 
             }
 
+
     }
 
     override fun onStart() {
         super.onStart()
+        generateSubscribedCourses(courseAdapter)
         this.materialAdapter.startListening()
     }
 
