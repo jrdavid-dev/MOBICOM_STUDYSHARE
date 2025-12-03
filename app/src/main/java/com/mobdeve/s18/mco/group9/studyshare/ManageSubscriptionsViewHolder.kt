@@ -13,10 +13,11 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Course
 class ManageSubscriptionsViewHolder(itemView: View,
     private val onSubscribeToggle: (Course, Boolean, Int) -> Unit): RecyclerView.ViewHolder(itemView) {
 
-    private val courseTitleTv: TextView = itemView.findViewById(R.id.courseTitleTv)
-    private val courseMaterialCountTv: TextView = itemView.findViewById(R.id.courseMaterialCountTv)
-    private val courseDetailsTv: TextView = itemView.findViewById(R.id.courseDetailsTv)
-    private val courseDetailsAuthorTv: TextView = itemView.findViewById(R.id.courseDetailsAuthorTv)
+        // TODO change the names
+    private val courseTitleTv: TextView = itemView.findViewById(R.id.profileCourseNameTv)
+    private val courseMaterialCountTv: TextView = itemView.findViewById(R.id.profileMaterialCountTv)
+    private val courseDetailsTv: TextView = itemView.findViewById(R.id.profileCourseDetailsTv)
+    private val courseDetailsAuthorTv: TextView = itemView.findViewById(R.id.profileAuthorTv)
     private val subscribeBtn: TextView = itemView.findViewById(R.id.subscribeBtn)
     private val colorManageSubsFrame: FrameLayout = itemView.findViewById(R.id.colorManageSubsFrame)
 

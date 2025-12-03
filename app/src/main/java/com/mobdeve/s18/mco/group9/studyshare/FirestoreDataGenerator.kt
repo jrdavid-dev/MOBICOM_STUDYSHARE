@@ -23,12 +23,12 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
             "John",
             "Doe",
             "john.doe@example.com",
-            1001L,
+            "1001",  // Changed from 1001L to "1001"
             Date()
         )
 
         db.collection("users")
-            .document(user.id.toString())
+            .document(user.id)  // Removed .toString()
             .set(user)
             .addOnSuccessListener {
                 println("✓ User created successfully")
@@ -42,12 +42,12 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
         val subscription = Subscription(
             "2001",
             "1001",
-            4001L,
+            "4001",  // Changed from 4001L to "4001"
             Date()
         )
 
         db.collection("subscriptions")
-            .document(subscription.id.toString())
+            .document(subscription.id)  // Removed .toString()
             .set(subscription)
             .addOnSuccessListener {
                 println("✓ Subscription created successfully")
@@ -56,20 +56,21 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
                 println("✗ Error creating subscription: ${e.message}")
             }
     }
+
     private fun generateCourse() {
         val course = Course(
             "Introduction to Mobile Development",
             "1001",
             "Learn the fundamentals of mobile app development with Kotlin and Android",
             "#475569",
-            2001L,
+            "2001",  // Changed from 2001L to "2001"
             5,
             Date(),
             Date()
         )
 
         db.collection("courses")
-            .document(course.id.toString())
+            .document(course.id)  // Removed .toString()
             .set(course)
             .addOnSuccessListener {
                 println("✓ Course created successfully")
@@ -87,7 +88,7 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
                 "Overview of the course structure and objectives",
                 "John Doe",
                 "#475569",
-                3001L,
+                "3001",  // Changed from 3001L to "3001"
                 MaterialType.Handouts,
                 "2002",
                 "https://example.com/docs/intro-handouts.pdf",
@@ -102,7 +103,7 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
                 "Complete notes on Kotlin syntax and basic concepts",
                 "John Doe",
                 "#84CC16",
-                3002L,
+                "3002",  // Changed from 3002L to "3002"
                 MaterialType.Notes,
                 "2001",
                 "https://example.com/docs/kotlin-notes.pdf",
@@ -117,7 +118,7 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
                 "Study guide for Views, Layouts, and Material Design components",
                 "John Doe",
                 "#8B5CF6",
-                3003L,
+                "3003",  // Changed from 3003L to "3003"
                 MaterialType.Reviewers,
                 "2001",
                 "https://example.com/docs/ui-reviewer.pdf",
@@ -132,7 +133,7 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
                 "Step-by-step handouts for creating a simple Android application",
                 "John Doe",
                 "#0891B2",
-                3004L,
+                "3004",  // Changed from 3004L to "3004"
                 MaterialType.Handouts,
                 "2001",
                 "https://example.com/docs/first-app-handouts.pdf",
@@ -147,7 +148,7 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
                 "Comprehensive reviewer covering MVVM, Jetpack Compose, and modern Android development",
                 "John Doe",
                 "#475569",
-                3005L,
+                "3005",  // Changed from 3005L to "3005"
                 MaterialType.Reviewers,
                 "2001",
                 "https://example.com/docs/final-reviewer.pdf",
@@ -160,7 +161,7 @@ class FirestoreDataGenerator(private val db: FirebaseFirestore) {
 
         materials.forEach { material ->
             db.collection("materials")
-                .document(material.id.toString())
+                .document(material.id)  // Removed .toString()
                 .set(material)
                 .addOnSuccessListener {
                     println("✓ Material '${material.materialName}' created successfully")

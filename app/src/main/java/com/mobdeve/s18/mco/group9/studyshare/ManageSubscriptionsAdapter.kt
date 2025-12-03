@@ -51,14 +51,16 @@ class ManageSubscriptionsAdapter(private val subscribedCourses: ArrayList<Course
     private fun subscribeToCourse(course : Course){
         val current_user_id = "1001"
         val db = Firebase.firestore
+        val subsRef = db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION).document()
+        val subsId = subsRef.id
         val data = hashMapOf(
             "userId" to current_user_id,
             "courseId" to course.id.toString(),
-            "createdAt" to FieldValue.serverTimestamp()
+            "createdAt" to FieldValue.serverTimestamp(),
+            MyFirestoreReferences.ID_FIELD to subsId
         )
-        db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
-            .document("4001")
-            .set(data)
+
+        subsRef.set(data)
             .addOnSuccessListener { documentReference ->
                 Log.d("MANAGE_SUBSCRIPTIONS_ACTIVITY", "DocumentSnapshot written with ID: 4002")
             }

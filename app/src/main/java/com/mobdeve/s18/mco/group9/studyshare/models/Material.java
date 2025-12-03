@@ -12,7 +12,7 @@ public class Material {
         Reviewers
     }
 
-    private long id;
+    private String id;
     private String materialName;
     private String materialTopic;
     private String materialDescription;
@@ -30,7 +30,7 @@ public class Material {
     }
 
     public Material(String materialName, String materialTopic, String materialDescription, String materialAuthor,
-                    String colorIcon, long id, MaterialType materialType, String courseId,
+                    String colorIcon, String id, MaterialType materialType, String courseId,
                     String fileUrl, String fileName, long fileSize,
                     Date createdAt, Date updatedAt) {
         this.materialName = materialName;
@@ -49,8 +49,8 @@ public class Material {
     }
 
     // Getters and Setters
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getMaterialName() { return materialName; }
     public void setMaterialName(String materialName) { this.materialName = materialName; }

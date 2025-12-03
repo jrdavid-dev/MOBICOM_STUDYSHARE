@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class Course {
 
-    private long id;
+    private String id;
     private String courseName;
-    private String courseAuthorId;
+    private String courseAuthor;
     private String courseDetails;
     private String colorIcon;
     private int materialCount;
@@ -19,11 +19,11 @@ public class Course {
 
     }
 
-    public Course(String courseName, String courseAuthorId, String courseDetails, String colorIcon, long id,
+    public Course(String courseName, String courseAuthor, String courseDetails, String colorIcon, String id,
                   int materialCount, Date createdAt, Date updatedAt){
 
         this.courseName = courseName;
-        this.courseAuthorId = courseAuthorId;
+        this.courseAuthor = courseAuthor;
         this.courseDetails = courseDetails;
         this.colorIcon = colorIcon;
         this.id = id;
@@ -32,14 +32,14 @@ public class Course {
         this.updatedAt = updatedAt;
     }
 
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getCourseName() { return courseName; }
     public void setCourseName(String courseName) { this.courseName = courseName; }
 
-    public String getCourseAuthor() { return courseAuthorId; }
-    public void setCourseAuthor(String courseAuthor) { this.courseAuthorId = courseAuthor; }
+    public String getCourseAuthor() { return courseAuthor; }
+    public void setCourseAuthor(String courseAuthor) { this.courseAuthor = courseAuthor; }
 
     public String getCourseDetails() { return courseDetails; }
     public void setCourseDetails(String courseDetails) { this.courseDetails = courseDetails; }

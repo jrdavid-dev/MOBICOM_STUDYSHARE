@@ -31,7 +31,7 @@ android:background="@drawable/rounded_upload">
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/courseTitleTv"
+        android:id="@+id/profileCourseNameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -61,7 +61,7 @@ android:background="@drawable/rounded_upload">
             android:textSize="10sp" />
 
         <TextView
-            android:id="@+id/courseDetailsTv"
+            android:id="@+id/profileCourseDetailsTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -75,7 +75,7 @@ android:background="@drawable/rounded_upload">
     </LinearLayout>
 
     <TextView
-        android:id="@+id/courseMaterialCountTv"
+        android:id="@+id/profileMaterialCountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

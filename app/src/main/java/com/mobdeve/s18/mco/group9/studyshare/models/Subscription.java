@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Subscription {
 
-    private long id;
+    private String id;
     private String userId;
     private String courseId;
     private @ServerTimestamp Date createdAt;
@@ -14,15 +14,15 @@ public class Subscription {
 
     }
 
-    public Subscription(String courseId, String userId, long id, Date createdAt){
+    public Subscription(String courseId, String userId, String id, Date createdAt){
         this.courseId = courseId;
         this.userId = userId;
         this.id = id;
         this.createdAt = createdAt;
     }
 
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getCourseId() { return courseId; }
     public void setCourseId(String courseId) { this.courseId = courseId; }
     public String getUserId() { return userId; }

@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="course_dark_blue">#475569</color>
+    <color name="course_green">#84CC16</color>
+    <color name="course_purple">#8B5CF6</color>
+    <color name="course_cyan">#0891B2</color>
 </resources>

@@ -10,6 +10,8 @@ enum class IntentKeys {
     MATERIAL_TOPIC,
     MATERIAL_TYPE,
     MATERIAL_AUTHOR,
-    MATERIAL_DATE
+    MATERIAL_DATE,
+    FILE_URL,
+    FILE_NAME,
 
 }

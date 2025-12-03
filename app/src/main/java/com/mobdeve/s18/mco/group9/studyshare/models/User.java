@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class User {
 
-    private long id;
+    private String id;
     private String username;
     private String firstName;
     private String lastName;
@@ -17,7 +17,7 @@ public class User {
 
     }
 
-    public User(String username, String firstName, String lastName, String email, long id, Date createdAt){
+    public User(String username, String firstName, String lastName, String email, String id, Date createdAt){
         this.username = username;
         this.email = email;
         this.firstName = firstName;
@@ -26,8 +26,8 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public long getId() { return id; }
-    public void setId(long id){ this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id){ this.id = id; }
 
     public String getEmail() { return email; }
 

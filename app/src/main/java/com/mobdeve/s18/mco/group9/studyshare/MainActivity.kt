@@ -86,6 +86,11 @@ class MainActivity : AppCompatActivity() {
             this.startActivity(intent)
         })
 
+        viewBinding.menuIv.setOnClickListener(View.OnClickListener{
+            val intent = Intent(applicationContext, ProfileActivity::class.java)
+            this.startActivity(intent)
+        })
+
 
     }
 
@@ -106,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MAIN_ACTIVITY", "No Subscriptions found")
                 } else {
                     db.collection(MyFirestoreReferences.COURSES_COLLECTION)
-                        .whereIn("id", subscriptionCourseIds.map { it.toLong() })
+                        .whereIn(MyFirestoreReferences.ID_FIELD, subscriptionCourseIds)
                         .get()
                         .addOnSuccessListener { sub_courses ->
                             subscribedCourses.clear()

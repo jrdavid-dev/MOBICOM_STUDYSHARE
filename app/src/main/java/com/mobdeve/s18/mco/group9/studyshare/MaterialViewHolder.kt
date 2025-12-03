@@ -12,10 +12,10 @@ import java.util.Date
 
 
 class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-    private val uploadTitleTv: TextView = itemView.findViewById(R.id.courseTitleTv)
+    private val uploadTitleTv: TextView = itemView.findViewById(R.id.profileCourseNameTv)
     private val uploadTypeTv: TextView = itemView.findViewById(R.id.uploadTypeTv)
-    private val uploadDateTv: TextView = itemView.findViewById(R.id.courseDetailsTv)
-    private val uploadAuthorTv: TextView = itemView.findViewById(R.id.courseMaterialCountTv)
+    private val uploadDateTv: TextView = itemView.findViewById(R.id.profileCourseDetailsTv)
+    private val uploadAuthorTv: TextView = itemView.findViewById(R.id.profileMaterialCountTv)
     private val colorMaterialFrame: FrameLayout = itemView.findViewById(R.id.colorMaterialFrame)
 
     fun bindData(material: Material) {
@@ -33,6 +33,8 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             intent.putExtra(IntentKeys.MATERIAL_AUTHOR.name, material.materialAuthor)
             intent.putExtra(IntentKeys.MATERIAL_DATE.name, material.createdAt.toString())
             intent.putExtra(IntentKeys.COLOR_ICON.name, material.colorIcon)
+            intent.putExtra(IntentKeys.FILE_URL.name, material.fileUrl)
+            intent.putExtra(IntentKeys.FILE_NAME.name, material.fileName)
             itemView.context.startActivity(intent)
         }
 
