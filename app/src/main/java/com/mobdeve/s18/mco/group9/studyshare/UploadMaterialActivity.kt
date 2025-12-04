@@ -1,5 +1,6 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -20,12 +21,15 @@ import com.mobdeve.s18.mco.group9.studyshare.databinding.UploadMaterialBinding
 import android.provider.OpenableColumns
 import android.widget.Toast
 import com.google.firebase.storage.storage
+import com.google.firebase.auth.FirebaseAuth
 
 class UploadMaterialActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: UploadMaterialBinding
-    private val current_user_id = "1001"
-    private val current_user_name = "John Doe"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
+    private var current_user_name: String = ""
 
     private var selectedFileUri: Uri? = null
     private var selectedFileName: String? = null
@@ -94,11 +98,29 @@ class UploadMaterialActivity : AppCompatActivity() {
         viewBinding = UploadMaterialBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        if (current_user_id == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
+        loadUserName()
         setupFileSelector()
         setupMaterialTypeSelector()
         loadCoursesAndSetupSelector()
         setupColorIconSelector()
         setupUploadButton()
+    }
+
+    private fun loadUserName() {
+        Firebase.firestore.collection(MyFirestoreReferences.USERS_COLLECTION)
+            .document(current_user_id!!)
+            .get()
+            .addOnSuccessListener { doc ->
+                val first = doc.getString(MyFirestoreReferences.FIRSTNAME_FIELD) ?: ""
+                val last = doc.getString(MyFirestoreReferences.LASTNAME_FIELD) ?: ""
+                current_user_name = "$first $last"
+            }
     }
 
     private fun setupFileSelector() {
@@ -426,6 +448,7 @@ class UploadMaterialActivity : AppCompatActivity() {
             MyFirestoreReferences.MATERIAL_DESCRIPTION_FIELD to materialDescription,
             MyFirestoreReferences.MATERIAL_TOPIC_FIELD to materialTopic,
             MyFirestoreReferences.MATERIAL_AUTHOR_FIELD to current_user_name,
+            MyFirestoreReferences.USER_ID_FIELD to current_user_id,
             MyFirestoreReferences.COLOR_ICON_FIELD to colorIcon,
             MyFirestoreReferences.MATERIAL_TYPE_FIELD to materialType,
             MyFirestoreReferences.FILE_NAME_FIELD to selectedFileName,

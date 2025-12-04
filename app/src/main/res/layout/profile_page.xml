@@ -65,7 +65,7 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/roboto_bold"
                             android:gravity="center"
-                            android:text="JD"
+                            android:text=""
                             android:textColor="#0891B2"
                             android:textSize="32sp" />
                     </androidx.cardview.widget.CardView>
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Jose David"
+                        android:text=""
                         android:textColor="#1E293B"
                         android:textSize="22sp" />
 
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/roboto_medium"
-                        android:text="BS - Computer Science ST"
+                        android:text=""
                         android:textColor="#0891B2"
                         android:textSize="14sp" />
 
@@ -104,7 +104,7 @@
                         android:fontFamily="@font/roboto"
                         android:gravity="center"
                         android:lineSpacingExtra="4dp"
-                        android:text="Hi! My name is Jose and I am a 3rd year CS-ST Student passionate about Android Development."
+                        android:text=""
                         android:textColor="#64748B"
                         android:textSize="14sp" />
 

@@ -12,6 +12,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.models.Course
+import com.google.firebase.auth.FirebaseAuth
 
 
 class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -22,7 +23,9 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
     private val courseDetailsAuthorTv: TextView = itemView.findViewById(R.id.profileAuthorTv)
     private val subscribeBtn: TextView = itemView.findViewById(R.id.subscribeBtn)
     private val colorManageSubsFrame: FrameLayout = itemView.findViewById(R.id.colorManageSubsFrame)
-    private val current_user_id = "1001"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
 
     fun bindData(course: Course, isSubscribed: Boolean) {
 
@@ -59,8 +62,8 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
                 subscribeBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#0891B2"))
                 subscribeBtn.setTextColor(Color.parseColor("#FFFFFF"))
 
+                current_user_id ?: return@setOnClickListener
                 val db  = Firebase.firestore
-                // TODO CHANGE THE HARDCODED USERID
                 val subsRef = db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION).document()
                 val subId = subsRef.id
                 val subData = hashMapOf(

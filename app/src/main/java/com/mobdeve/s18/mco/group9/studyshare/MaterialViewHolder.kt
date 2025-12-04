@@ -36,7 +36,9 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         uploadAuthorTv.text = "by ${material.materialAuthor}"
         colorMaterialFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(material.colorIcon))
 
-        if(showEditDelete && currentUserId == "1001"){
+        val userOwnsMaterial = material.materialAuthor == currentUserId
+
+        if (showEditDelete && userOwnsMaterial) {
             editBtn.visibility = View.VISIBLE
             deleteBtn.visibility = View.VISIBLE
 
