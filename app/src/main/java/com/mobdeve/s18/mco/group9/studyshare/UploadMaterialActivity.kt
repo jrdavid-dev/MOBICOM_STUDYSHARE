@@ -266,7 +266,6 @@ class UploadMaterialActivity : AppCompatActivity() {
         }
 
         AlertDialog.Builder(this)
-            .setTitle("Create New Course")
             .setView(dialogView)
             .setPositiveButton("Create") { dialog, _ ->
                 val courseName = inputName.text.toString().trim()

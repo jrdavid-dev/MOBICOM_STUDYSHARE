@@ -12,33 +12,71 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.databinding.ActivityMainBinding
+import com.mobdeve.s18.mco.group9.studyshare.databinding.ManageSubscriptionsBinding
 import com.mobdeve.s18.mco.group9.studyshare.models.Material
 import com.mobdeve.s18.mco.group9.studyshare.models.Course
 
 class MainActivity : AppCompatActivity() {
 
 
+    private val TAG = "MAIN_ACTIVITY"
     private lateinit var materialAdapter : MaterialAdapter
     private lateinit var courseAdapter: CourseAdapter
+    private lateinit var viewBinding: ActivityMainBinding
     private val current_user_id = "1001"
 
-    companion object {
-        val subscribedCourses = ArrayList<Course>()
-    }
+    private val db by lazy { Firebase.firestore }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewBinding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        // Material Adapter
-        val db = Firebase.firestore
+        loadRecentUploads()
+        loadSubscribedCourses()
+        setupClickListeners()
+
+
+    }
+
+    private fun setupClickListeners() {
+        viewBinding.apply {
+            searchButton.setOnClickListener { navigateToSearch() }
+            searchIv.setOnClickListener { navigateToSearch() }
+            seeAllUploadsTv.setOnClickListener { navigateToRecentUploads() }
+            fabUploadBtn.setOnClickListener { navigateToUpload() }
+            manageSubsTv.setOnClickListener { navigateToManageSubscriptions() }
+            menuIv.setOnClickListener { navigateToProfile() }
+        }
+    }
+
+    private fun navigateToSearch() {
+        startActivity(Intent(this, SearchPageActivity::class.java))
+    }
+
+    private fun navigateToRecentUploads() {
+        startActivity(Intent(this, RecentUploadsActivity::class.java))
+    }
+
+    private fun navigateToUpload() {
+        startActivity(Intent(this, UploadMaterialActivity::class.java))
+    }
+
+    private fun navigateToManageSubscriptions() {
+        startActivity(Intent(this, ManageSubscriptionsActivity::class.java))
+    }
+
+    private fun navigateToProfile() {
+        startActivity(Intent(this, ProfileActivity::class.java))
+    }
+
+    private fun loadRecentUploads(){
 
         val materialsRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION)
 
-        val materialsQuery = materialsRef.orderBy("createdAt", Query.Direction.DESCENDING).limit(10)
+        val materialsQuery = materialsRef.orderBy(MyFirestoreReferences.CREATED_AT_FIELD, Query.Direction.DESCENDING).limit(10)
 
 
         val options = FirestoreRecyclerOptions.Builder<Material>()
@@ -50,53 +88,13 @@ class MainActivity : AppCompatActivity() {
 
 
         viewBinding.uploadsRecyclerView.adapter = materialAdapter
-        viewBinding.uploadsRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        // SUBS ADAPTER
-        courseAdapter = CourseAdapter(subscribedCourses)
-        viewBinding.subsRecyclerView.adapter = courseAdapter
-        viewBinding.subsRecyclerView.layoutManager = GridLayoutManager(this, 2)
-
-        generateSubscribedCourses(courseAdapter)
-
-
-
-        viewBinding.searchButton.setOnClickListener(View.OnClickListener{
-            val intent = Intent(applicationContext, SearchPageActivity::class.java)
-            this.startActivity(intent)
-        })
-
-        viewBinding.searchIv.setOnClickListener(View.OnClickListener{
-            val intent = Intent(applicationContext, SearchPageActivity::class.java)
-            this.startActivity(intent)
-        })
-
-        viewBinding.seeAllUploadsTv.setOnClickListener(View.OnClickListener{
-            val intent = Intent(applicationContext, RecentUploadsActivity::class.java)
-            this.startActivity(intent)
-        })
-
-        viewBinding.fabUploadBtn.setOnClickListener(View.OnClickListener{
-            val intent = Intent(applicationContext, UploadMaterialActivity::class.java)
-            this.startActivity(intent)
-        })
-
-        viewBinding.manageSubsTv.setOnClickListener(View.OnClickListener{
-            val intent = Intent(applicationContext, ManageSubscriptionsActivity::class.java)
-            this.startActivity(intent)
-        })
-
-        viewBinding.menuIv.setOnClickListener(View.OnClickListener{
-            val intent = Intent(applicationContext, ProfileActivity::class.java)
-            this.startActivity(intent)
-        })
-
-
+        viewBinding.uploadsRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
     }
+    private fun loadSubscribedCourses() {
 
-    private fun generateSubscribedCourses(courseAdapter : CourseAdapter){
-
-        val db = Firebase.firestore
+        if (::courseAdapter.isInitialized) {
+            courseAdapter.stopListening()
+        }
 
         db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
             .whereEqualTo(MyFirestoreReferences.USER_ID_FIELD, current_user_id)
@@ -108,45 +106,58 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 if (subscriptionCourseIds.isEmpty()) {
-                    Log.d("MAIN_ACTIVITY", "No Subscriptions found")
-                } else {
-                    db.collection(MyFirestoreReferences.COURSES_COLLECTION)
-                        .whereIn(MyFirestoreReferences.ID_FIELD, subscriptionCourseIds)
-                        .get()
-                        .addOnSuccessListener { sub_courses ->
-                            subscribedCourses.clear()
-
-                            for (sub_course in sub_courses.documents) {
-                                val course = sub_course.toObject(Course::class.java)
-                                if (course != null) {
-                                    subscribedCourses.add(course)
-                                }
-                            }
-                            courseAdapter.notifyDataSetChanged()
-                            Log.d("MAIN_ACTIVITY", "Loaded ${subscribedCourses.size} courses")
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.w("MAIN_ACTIVITY", "Error getting courses", exception)
-                        }
+                    Log.d(TAG, "User has no subscriptions")
+                    viewBinding.subsRecyclerView.adapter = null
+                    viewBinding.subsRecyclerView.visibility = View.GONE
+                    return@addOnSuccessListener
                 }
+
+                viewBinding.subsRecyclerView.visibility = View.VISIBLE
+
+                val coursesRef = db.collection(MyFirestoreReferences.COURSES_COLLECTION)
+                val coursesQuery: Query = coursesRef.whereIn(
+                    MyFirestoreReferences.ID_FIELD,
+                    subscriptionCourseIds
+                )
+
+                val options = FirestoreRecyclerOptions.Builder<Course>()
+                    .setQuery(coursesQuery, Course::class.java)
+                    .build()
+
+                courseAdapter = CourseAdapter(options)
+
+                viewBinding.subsRecyclerView.itemAnimator = null
+                viewBinding.subsRecyclerView.adapter = courseAdapter
+                viewBinding.subsRecyclerView.layoutManager = GridLayoutManager(this, 2)
+
+                courseAdapter.startListening()
+
+                Log.d(TAG, "Loaded ${subscriptionCourseIds.size} subscribed courses")
             }
             .addOnFailureListener { exception ->
-                Log.w("MAIN_ACTIVITY", "Error getting courses", exception)
-
+                Log.w(TAG, "Error getting subscribed courses", exception)
             }
-
-
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadSubscribedCourses()
+    }
     override fun onStart() {
         super.onStart()
-        generateSubscribedCourses(courseAdapter)
         this.materialAdapter.startListening()
+
+        if (::courseAdapter.isInitialized) {
+            courseAdapter.startListening()
+        }
     }
 
     override fun onStop() {
         super.onStop()
         this.materialAdapter.stopListening()
+        if (::courseAdapter.isInitialized) {
+            courseAdapter.stopListening()
+        }
     }
 
 

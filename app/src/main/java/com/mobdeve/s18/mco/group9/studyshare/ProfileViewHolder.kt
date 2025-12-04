@@ -30,6 +30,7 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val editBtn: ImageView = itemView.findViewById(R.id.profileEditCourseBtn)
     private val deleteBtn: ImageView = itemView.findViewById(R.id.profileCourseDeleteBtn)
+    private val colorManageSubsFrame: FrameLayout = itemView.findViewById(R.id.colorManageSubsFrame)
 
     fun bindData(course: Course) {
 
@@ -37,6 +38,7 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         courseDetailsTv.text = course.courseDetails
         courseDetailsAuthorTv.text = course.courseAuthor
         courseMaterialCountTv.text = "${course.materialCount} Materials"
+        colorManageSubsFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(course.colorIcon))
 
         profileCoursesFrame.setOnClickListener {
             val intent = Intent(itemView.context, CourseDetailsActivity::class.java)
@@ -94,8 +96,7 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .setTitle("Delete Course")
             .setMessage("Are you sure you want to delete this course?")
             .setPositiveButton("Delete") { dialog, which ->
-                // You'll need to handle deletion through the adapter
-                // Pass this action to your adapter via a callback
+
 
                 val db = Firebase.firestore
 

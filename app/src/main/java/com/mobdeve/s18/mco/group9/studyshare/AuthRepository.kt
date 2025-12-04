@@ -29,7 +29,7 @@ class AuthRepository {
                     MyFirestoreReferences.FIRSTNAME_FIELD to firstName,
                     MyFirestoreReferences.LASTNAME_FIELD to lastName,
                     MyFirestoreReferences.EMAIL_FIELD to email,
-                    MyFirestoreReferences.USER_ID_FIELD to uid, // or custom id
+                    MyFirestoreReferences.ID_FIELD to uid,
                     MyFirestoreReferences.CREATED_AT_FIELD to Date()
                 )
 
