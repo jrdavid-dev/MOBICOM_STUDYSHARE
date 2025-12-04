@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
@@ -37,21 +38,47 @@ class MainActivity : AppCompatActivity() {
         loadRecentUploads()
         loadSubscribedCourses()
         setupClickListeners()
+        setupBottomNavigation()
+
+
 
 
     }
-
+    private fun setupBottomNavigation() {
+        viewBinding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    true
+                }
+                R.id.nav_search -> {
+                    navigateToSearch()
+                    true
+                }
+                R.id.nav_notifs -> {
+                    true
+                }
+                R.id.nav_profile -> {
+                    navigateToProfile()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
     private fun setupClickListeners() {
         viewBinding.apply {
+
             searchButton.setOnClickListener { navigateToSearch() }
             searchIv.setOnClickListener { navigateToSearch() }
             seeAllUploadsTv.setOnClickListener { navigateToRecentUploads() }
             fabUploadBtn.setOnClickListener { navigateToUpload() }
             manageSubsTv.setOnClickListener { navigateToManageSubscriptions() }
-            menuIv.setOnClickListener { navigateToProfile() }
         }
     }
-
+    // TODO add notif
+    private fun navigateToProfile(){
+        startActivity(Intent(this, ProfileActivity::class.java))
+    }
     private fun navigateToSearch() {
         startActivity(Intent(this, SearchPageActivity::class.java))
     }
@@ -66,10 +93,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToManageSubscriptions() {
         startActivity(Intent(this, ManageSubscriptionsActivity::class.java))
-    }
-
-    private fun navigateToProfile() {
-        startActivity(Intent(this, ProfileActivity::class.java))
     }
 
     private fun loadRecentUploads(){
@@ -142,6 +165,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadSubscribedCourses()
+        viewBinding.bottomNavigation.selectedItemId = R.id.nav_home
     }
     override fun onStart() {
         super.onStart()
