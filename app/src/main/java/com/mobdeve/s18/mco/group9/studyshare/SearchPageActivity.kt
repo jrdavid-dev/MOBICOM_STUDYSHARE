@@ -45,7 +45,7 @@ class SearchPageActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupSearch()
-        setupFilterButtons() // ADD THIS LINE - You forgot to call it!
+        setupFilterButtons()
 
         viewBinding.cancelTv.setOnClickListener {
             val intent = Intent(applicationContext, MainActivity::class.java)
@@ -61,7 +61,7 @@ class SearchPageActivity : AppCompatActivity() {
             .setQuery(query, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options, current_user_id ?: "", false)
+        materialAdapter = MaterialAdapter(options, false)
 
         viewBinding.searchMaterialsRecyclerView.itemAnimator = null
         viewBinding.searchMaterialsRecyclerView.adapter = materialAdapter
@@ -123,28 +123,28 @@ class SearchPageActivity : AppCompatActivity() {
         viewBinding.searchPageHandoutsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F8FAFC"))
         viewBinding.searchPageReviewersBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F8FAFC"))
 
-        viewBinding.searchPageAllBtn.setTextColor(Color.parseColor("#600F172A")) // Fixed: removed extra #
+        viewBinding.searchPageAllBtn.setTextColor(Color.parseColor("#600F172A"))
         viewBinding.searchPageLectureNotesBtn.setTextColor(Color.parseColor("#600F172A"))
         viewBinding.searchPageHandoutsBtn.setTextColor(Color.parseColor("#600F172A"))
         viewBinding.searchPageReviewersBtn.setTextColor(Color.parseColor("#600F172A"))
 
-        // Set selected button
+
         selectedButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#0891B2"))
-        (selectedButton as TextView).setTextColor(Color.parseColor("#FFFFFF")) // White text for selected
+        (selectedButton as TextView).setTextColor(Color.parseColor("#FFFFFF"))
         selectedButton.isSelected = true
     }
 
-    private fun updateQuery() { // REMOVE parameter
+    private fun updateQuery() {
         materialAdapter.stopListening()
 
         var query : Query = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION)
 
-        // Apply filter by material type
+
         if (currentFilterType != null) {
             query = query.whereEqualTo(MyFirestoreReferences.MATERIAL_TYPE_FIELD, currentFilterType)
         }
 
-        // Apply search text filter
+
         if (currentSearchText.isNotEmpty()) {
             query = query.orderBy(MyFirestoreReferences.MATERIAL_NAME_FIELD)
                 .startAt(currentSearchText)

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.models.Course
@@ -34,14 +35,35 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val deleteBtn: ImageView = itemView.findViewById(R.id.profileCourseDeleteBtn)
     private val colorManageSubsFrame: FrameLayout = itemView.findViewById(R.id.colorManageSubsFrame)
 
-    private val current_user_id = "1001"
-    private val current_user_name = "1001"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
+
+    private var current_user_name: String = "Unknown User"
+
 
     fun bindData(course: Course) {
 
+        val db = Firebase.firestore
+
+        Log.d("PROFILE_VIEWHOLDER", "Fetching user info for courseAuthor: ${course.courseAuthor}")
+
+        db.collection(MyFirestoreReferences.USERS_COLLECTION)
+            .document(course.courseAuthor)
+            .get()
+            .addOnSuccessListener { userDocument ->
+                val firstName = userDocument.getString(MyFirestoreReferences.FIRST_NAME_FIELD) ?: ""
+                val lastName = userDocument.getString(MyFirestoreReferences.LAST_NAME_FIELD) ?: ""
+                current_user_name = "$firstName $lastName".trim()
+                Log.d("PROFILE_VIEWHOLDER", "Fetched user name: $current_user_name")
+                courseDetailsAuthorTv.text = current_user_name
+            }
+            .addOnFailureListener { exception ->
+                Log.e("PROFILE_VIEWHOLDER", "Error fetching user", exception)
+            }
+
         courseTitleTv.text = course.courseName
         courseDetailsTv.text = course.courseDetails
-        courseDetailsAuthorTv.text = course.courseAuthor
         courseMaterialCountTv.text = "${course.materialCount} Materials"
         colorManageSubsFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(course.colorIcon))
 
@@ -160,22 +182,34 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 Log.e("DELETE_COURSE", "Error querying subscriptions", exception)
             }
     }
+
     private fun addEditNotification(courseId : String){
         val db = Firebase.firestore
+        Log.d("EDIT_NOTIFICATION", "=== Starting addEditNotification ===")
+        Log.d("EDIT_NOTIFICATION", "Course ID: $courseId")
+        Log.d("EDIT_NOTIFICATION", "Current User ID: $current_user_id")
+        Log.d("EDIT_NOTIFICATION", "Current User Name: $current_user_name")
+
         db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
-            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId) // Query by course ID
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId)
             .get()
             .addOnSuccessListener { subscriptions ->
+                Log.d("EDIT_NOTIFICATION", "Query returned ${subscriptions.size()} subscription documents")
 
                 val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
-                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD) // Get user IDs
+                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD)
                 }
 
-                Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
+                Log.d("EDIT_NOTIFICATION", "Found ${subscribedUserIds.size} subscribed users: $subscribedUserIds")
 
                 subscribedUserIds.forEach { userId ->
+                    Log.d("EDIT_NOTIFICATION", "Processing userId: '$userId'")
+                    Log.d("EDIT_NOTIFICATION", "Comparing with current_user_id: '$current_user_id'")
+                    Log.d("EDIT_NOTIFICATION", "Are they different? ${userId != current_user_id}")
 
                     if (userId != current_user_id) {
+                        Log.d("EDIT_NOTIFICATION", "✅ Sending notification to user: $userId")
+
                         val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
                         val notifId = notifsRef.id
 
@@ -192,37 +226,52 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                             MyFirestoreReferences.CREATED_AT_FIELD to FieldValue.serverTimestamp()
                         )
 
+                        Log.d("EDIT_NOTIFICATION", "Notification data: $notifData")
+
                         notifsRef.set(notifData)
                             .addOnSuccessListener {
-                                Log.d("NOTIFICATIONS", "Notification sent to user: $userId")
+                                Log.d("EDIT_NOTIFICATION", "Notification successfully sent to user: $userId")
                             }
                             .addOnFailureListener { exception ->
-                                Log.w("NOTIFICATIONS", "Error adding notification for user: $userId", exception)
+                                Log.e("EDIT_NOTIFICATION", "Error sending notification to user: $userId", exception)
                             }
+                    } else {
+                        Log.d("EDIT_NOTIFICATION", "Skipping current user (author): $userId")
                     }
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
+                Log.e("EDIT_NOTIFICATION", "Error getting subscriptions", exception)
             }
     }
 
     private fun addDeleteNotification(courseId : String){
         val db = Firebase.firestore
+        Log.d("DELETE_NOTIFICATION", "=== Starting addDeleteNotification ===")
+        Log.d("DELETE_NOTIFICATION", "Course ID: $courseId")
+        Log.d("DELETE_NOTIFICATION", "Current User ID: $current_user_id")
+        Log.d("DELETE_NOTIFICATION", "Current User Name: $current_user_name")
+
         db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
-            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId) // Query by course ID
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId)
             .get()
             .addOnSuccessListener { subscriptions ->
+                Log.d("DELETE_NOTIFICATION", "Query returned ${subscriptions.size()} subscription documents")
 
                 val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
-                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD) // Get user IDs
+                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD)
                 }
 
-                Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
+                Log.d("DELETE_NOTIFICATION", "Found ${subscribedUserIds.size} subscribed users: $subscribedUserIds")
 
                 subscribedUserIds.forEach { userId ->
+                    Log.d("DELETE_NOTIFICATION", "Processing userId: '$userId'")
+                    Log.d("DELETE_NOTIFICATION", "Comparing with current_user_id: '$current_user_id'")
+                    Log.d("DELETE_NOTIFICATION", "Are they different? ${userId != current_user_id}")
 
                     if (userId != current_user_id) {
+                        Log.d("DELETE_NOTIFICATION", "Sending notification to user: $userId")
+
                         val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
                         val notifId = notifsRef.id
 
@@ -239,18 +288,22 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                             MyFirestoreReferences.CREATED_AT_FIELD to FieldValue.serverTimestamp()
                         )
 
+                        Log.d("DELETE_NOTIFICATION", "Notification data: $notifData")
+
                         notifsRef.set(notifData)
                             .addOnSuccessListener {
-                                Log.d("NOTIFICATIONS", "Notification sent to user: $userId")
+                                Log.d("DELETE_NOTIFICATION", "Notification successfully sent to user: $userId")
                             }
                             .addOnFailureListener { exception ->
-                                Log.w("NOTIFICATIONS", "Error adding notification for user: $userId", exception)
+                                Log.e("DELETE_NOTIFICATION", " Error sending notification to user: $userId", exception)
                             }
+                    } else {
+                        Log.d("DELETE_NOTIFICATION", "Skipping current user (author): $userId")
                     }
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
+                Log.e("DELETE_NOTIFICATION", " Error getting subscriptions", exception)
             }
     }
 }

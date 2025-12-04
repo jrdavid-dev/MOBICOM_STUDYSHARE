@@ -62,37 +62,23 @@ class ProfileActivity : AppCompatActivity() {
         val userId = current_user_id ?: return
         val db = Firebase.firestore
 
-        db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
-            .whereEqualTo(MyFirestoreReferences.USER_ID_FIELD, userId)
-            .get()
-            .addOnSuccessListener { subscriptions ->
+        val coursesQuery = db.collection(MyFirestoreReferences.COURSES_COLLECTION)
+            .whereEqualTo(MyFirestoreReferences.COURSE_AUTHOR_FIELD, userId)
 
-                val subscribedIds = subscriptions.documents.mapNotNull {
-                    it.getString(MyFirestoreReferences.COURSE_ID_FIELD)
-                }
+        val options = FirestoreRecyclerOptions.Builder<Course>()
+            .setQuery(coursesQuery, Course::class.java)
+            .build()
 
-                if (subscribedIds.isEmpty()) {
-                    binding.profileCoursesRecyclerView.adapter = null
-                    return@addOnSuccessListener
-                }
+        profileAdapter = ProfileAdapter(options)
 
-                val coursesQuery = db.collection(MyFirestoreReferences.COURSES_COLLECTION)
-                    .whereIn(MyFirestoreReferences.ID_FIELD, subscribedIds)
+        binding.profileCoursesRecyclerView.apply {
+            itemAnimator = null
+            adapter = profileAdapter
+            layoutManager = LinearLayoutManager(this@ProfileActivity)
+        }
 
-                val options = FirestoreRecyclerOptions.Builder<Course>()
-                    .setQuery(coursesQuery, Course::class.java)
-                    .build()
+        profileAdapter.startListening()
 
-                profileAdapter = ProfileAdapter(options)
-
-                binding.profileCoursesRecyclerView.apply {
-                    itemAnimator = null
-                    adapter = profileAdapter
-                    layoutManager = LinearLayoutManager(this@ProfileActivity)
-                }
-
-                profileAdapter.startListening()
-            }
     }
 
 

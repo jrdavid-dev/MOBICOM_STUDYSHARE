@@ -6,17 +6,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.databinding.NotificationsPageBinding
-import com.mobdeve.s18.mco.group9.studyshare.databinding.ProfilePageBinding
-import com.mobdeve.s18.mco.group9.studyshare.models.Course
+
 import com.mobdeve.s18.mco.group9.studyshare.models.Notification
 
 class NotificationsActivity : AppCompatActivity() {
 
 
-    private val current_user_id = "1001"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
 
     private lateinit var notificationsAdapter: NotificationsAdapter
 

@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             .setQuery(materialsQuery, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options, current_user_id ?: "", false)
+        materialAdapter = MaterialAdapter(options, false)
         viewBinding.uploadsRecyclerView.itemAnimator = null
 
 

@@ -39,6 +39,10 @@ object MyFirestoreReferences {
 
     const val AUTHOR_NAME_FIELD = "authorName"
     const val IS_READ_FIELD = "isRead"
+
+    const val FIRST_NAME_FIELD = "firstName"
+
+    const val LAST_NAME_FIELD = "lastname"
 }
 
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.models.Course
@@ -30,33 +31,54 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val editBtn : ImageView = itemView.findViewById(R.id.materialEditBtn)
     private val deleteBtn : ImageView = itemView.findViewById(R.id.materialDeleteBtn)
-    private val current_user_id = "1001"
-    private val current_user_name = "John Doe"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
 
-    fun bindData(material: Material, currentUserId : String, showEditDelete : Boolean) {
+
+    //TODO add username or query
+    private var current_user_name: String = "Unknown User"
+
+    fun bindData(material: Material, showEditDelete : Boolean) {
+
+
         uploadTitleTv.text = material.materialName
         uploadTypeTv.text = material.materialType.toString()
         uploadDateTv.text = getTimeAgo(material.createdAt)
         uploadAuthorTv.text = "by ${material.materialAuthor}"
         colorMaterialFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(material.colorIcon))
 
-        val userOwnsMaterial = material.materialAuthor == currentUserId
+        val db = Firebase.firestore
 
-        if (showEditDelete && userOwnsMaterial) {
-            editBtn.visibility = View.VISIBLE
-            deleteBtn.visibility = View.VISIBLE
+        db.collection(MyFirestoreReferences.USERS_COLLECTION)
+            .document(current_user_id.toString())
+            .get()
+            .addOnSuccessListener { userDocument ->
+                val firstName = userDocument.getString(MyFirestoreReferences.FIRST_NAME_FIELD) ?: ""
+                val lastName = userDocument.getString(MyFirestoreReferences.LAST_NAME_FIELD) ?: ""
+                current_user_name = "$firstName $lastName".trim()
+                Log.d("PROFILE_VIEWHOLDER", "Fetched user name: $current_user_name")
 
-            editBtn.setOnClickListener {
-                showEditMaterialDialog(material)
+                if(showEditDelete){
+                    editBtn.visibility = View.VISIBLE
+                    deleteBtn.visibility = View.VISIBLE
+
+                    editBtn.setOnClickListener {
+                        showEditMaterialDialog(material)
+                    }
+
+                    deleteBtn.setOnClickListener {
+                        showDeleteConfirmationDialog(material)
+                    }
+                } else {
+                    editBtn.visibility = View.GONE
+                    deleteBtn.visibility = View.GONE
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("PROFILE_VIEWHOLDER", "Error fetching user", exception)
             }
 
-            deleteBtn.setOnClickListener {
-                showDeleteConfirmationDialog(material)
-            }
-        } else {
-            editBtn.visibility = View.GONE
-            deleteBtn.visibility = View.GONE
-        }
 
         colorMaterialFrame.setOnClickListener {
             val intent = Intent(itemView.context, MaterialDetailsActivity::class.java)

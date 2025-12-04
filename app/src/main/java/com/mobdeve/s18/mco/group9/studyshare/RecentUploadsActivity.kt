@@ -37,14 +37,14 @@ class RecentUploadsActivity : AppCompatActivity() {
 
         val materialsRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION)
 
-        val query = materialsRef.orderBy("createdAt", Query.Direction.DESCENDING)
+        val query = materialsRef.orderBy(MyFirestoreReferences.CREATED_AT_FIELD, Query.Direction.DESCENDING)
 
 
         val options = FirestoreRecyclerOptions.Builder<Material>()
             .setQuery(query, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options, current_user_id ?: "", false)
+        materialAdapter = MaterialAdapter(options, false)
 
 
         viewBinding.recentUploadsRecyclerView.itemAnimator = null

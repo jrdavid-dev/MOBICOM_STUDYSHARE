@@ -1,5 +1,7 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
+import android.content.Intent
+import com.google.firebase.auth.FirebaseAuth
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -15,13 +17,21 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Material
 class CourseDetailsActivity : AppCompatActivity() {
 
     private lateinit var materialAdapter : MaterialAdapter
-    private val current_user_id = "1001"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val viewBinding: CourseDetailsBinding = CourseDetailsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        if (current_user_id == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
 
         val courseId = intent.getStringExtra(IntentKeys.COURSE_ID.name)
         val courseName = intent.getStringExtra(IntentKeys.COURSE_NAME.name)
@@ -46,7 +56,7 @@ class CourseDetailsActivity : AppCompatActivity() {
             .setQuery(query, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options, current_user_id, true)
+        materialAdapter = MaterialAdapter(options, true)
 
         viewBinding.courseDetailsMaterialRecyclerView.itemAnimator = null
         viewBinding.courseDetailsMaterialRecyclerView.adapter = materialAdapter

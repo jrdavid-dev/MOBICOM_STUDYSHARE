@@ -15,18 +15,16 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Course
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.Query
 import com.google.firebase.auth.FirebaseAuth
-import com.mobdeve.s18.mco.group9.studyshare.models.Material
 
 
 class ManageSubscriptionsActivity : AppCompatActivity() {
     private lateinit var manageSubscriptionAdapter: ManageSubscriptionsAdapter
     private lateinit var viewBinding: ManageSubscriptionsBinding
-    private val remainingCourses = ArrayList<Course>()
     private val auth by lazy { FirebaseAuth.getInstance() }
     private val current_user_id: String?
         get() = auth.currentUser?.uid
     private var currentSearchText = ""
-    private var currentTab = 0 // Track which tab is active
+    private var currentTab = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +75,10 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
                         .startAt(currentSearchText)
                         .endAt(currentSearchText + "\uf8ff")
                 } else {
-                    coursesQuery = coursesQuery.orderBy(MyFirestoreReferences.CREATED_AT_FIELD, Query.Direction.DESCENDING)
+                    coursesQuery = coursesQuery.orderBy(
+                        MyFirestoreReferences.CREATED_AT_FIELD,
+                        Query.Direction.DESCENDING
+                    )
                 }
 
                 val options = FirestoreRecyclerOptions.Builder<Course>()
@@ -92,7 +93,8 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
 
                 viewBinding.manageSubscriptionsRecyclerView.itemAnimator = null
                 viewBinding.manageSubscriptionsRecyclerView.adapter = manageSubscriptionAdapter
-                viewBinding.manageSubscriptionsRecyclerView.layoutManager = LinearLayoutManager(this)
+                viewBinding.manageSubscriptionsRecyclerView.layoutManager =
+                    LinearLayoutManager(this)
 
                 manageSubscriptionAdapter.startListening()
 
@@ -134,7 +136,10 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
                         .startAt(currentSearchText)
                         .endAt(currentSearchText + "\uf8ff")
                 } else {
-                    coursesQuery = coursesQuery.orderBy(MyFirestoreReferences.CREATED_AT_FIELD, Query.Direction.DESCENDING)
+                    coursesQuery = coursesQuery.orderBy(
+                        MyFirestoreReferences.CREATED_AT_FIELD,
+                        Query.Direction.DESCENDING
+                    )
                 }
 
                 val options = FirestoreRecyclerOptions.Builder<Course>()
@@ -149,7 +154,8 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
 
                 viewBinding.manageSubscriptionsRecyclerView.itemAnimator = null
                 viewBinding.manageSubscriptionsRecyclerView.adapter = manageSubscriptionAdapter
-                viewBinding.manageSubscriptionsRecyclerView.layoutManager = LinearLayoutManager(this)
+                viewBinding.manageSubscriptionsRecyclerView.layoutManager =
+                    LinearLayoutManager(this)
 
                 manageSubscriptionAdapter.startListening()
 
@@ -167,6 +173,7 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
                     0 -> {
                         loadSubscribedCourses()
                     }
+
                     1 -> {
                         loadAvailableCourses()
                     }
