@@ -19,30 +19,34 @@
 
     <LinearLayout
         android:layout_width="372dp"
-        android:layout_height="650dp"
+        android:layout_height="670dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_uploadmaterial"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/fileUploadContainer"
             android:layout_width="332dp"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_dotted_uploadmaterial"
-            android:orientation="vertical">
+            android:minHeight="150dp"
+            android:orientation="vertical"
+            android:padding="15dp">
 
             <Button
                 android:id="@+id/fileBtn"
-                android:layout_width="60dp"
-                android:layout_height="70dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#600891B2" />
+                android:background="@drawable/upload"
+                app:backgroundTint="#22D3EE" />
 
             <TextView
-                android:id="@+id/profileNameTv"
+                android:id="@+id/fileStatusTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -54,7 +58,7 @@
                 android:textSize="10sp" />
 
             <TextView
-                android:id="@+id/profileDescriptionTv"
+                android:id="@+id/fileInfoTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -63,6 +67,61 @@
                 android:gravity="center"
                 android:text="PDF, JPG, DOCX, PNG"
                 android:textSize="10sp" />
+
+            <LinearLayout
+                android:id="@+id/fileDetailsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_upload"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/fileIconIv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/document" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/fileNameDetailTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_medium"
+                        android:maxLines="1"
+                        android:text="filename.pdf"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/fileSizeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="2.5 MB"
+                        android:textColor="#6B6D71"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/removeFileBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Remove file"
+                    android:src="@drawable/close" />
+            </LinearLayout>
         </LinearLayout>
 
         <EditText
@@ -96,9 +155,11 @@
             android:background="@drawable/rounded_text"
             android:clickable="true"
             android:drawableEnd="@android:drawable/arrow_down_float"
-            android:focusable="true"
+            android:focusable="false"
             android:gravity="center_vertical"
             android:hint="Course Name"
+            android:inputType="none"
+            android:cursorVisible="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp" />
 
@@ -164,15 +225,17 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/uploadIv"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/stat_sys_upload_done"
                 app:tint="@android:color/white" />
 
             <TextView
+                android:id="@+id/uploadText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="4dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Upload Material"
                 android:textColor="@android:color/white"
