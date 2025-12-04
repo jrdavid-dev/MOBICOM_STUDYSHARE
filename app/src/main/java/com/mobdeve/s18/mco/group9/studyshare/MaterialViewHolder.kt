@@ -1,12 +1,20 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.text.InputType
+import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import com.mobdeve.s18.mco.group9.studyshare.models.Course
 import com.mobdeve.s18.mco.group9.studyshare.models.Material
 import java.util.Date
 
@@ -18,14 +26,33 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val uploadAuthorTv: TextView = itemView.findViewById(R.id.profileMaterialCountTv)
     private val colorMaterialFrame: FrameLayout = itemView.findViewById(R.id.colorMaterialFrame)
 
-    fun bindData(material: Material) {
+    private val editBtn : ImageView = itemView.findViewById(R.id.materialEditBtn)
+    private val deleteBtn : ImageView = itemView.findViewById(R.id.materialDeleteBtn)
+
+    fun bindData(material: Material, currentUserId : String, showEditDelete : Boolean) {
         uploadTitleTv.text = material.materialName
         uploadTypeTv.text = material.materialType.toString()
         uploadDateTv.text = getTimeAgo(material.createdAt)
         uploadAuthorTv.text = "by ${material.materialAuthor}"
         colorMaterialFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(material.colorIcon))
 
-        itemView.setOnClickListener {
+        if(showEditDelete && currentUserId == "1001"){
+            editBtn.visibility = View.VISIBLE
+            deleteBtn.visibility = View.VISIBLE
+
+            editBtn.setOnClickListener {
+                showEditMaterialDialog(material)
+            }
+
+            deleteBtn.setOnClickListener {
+                showDeleteConfirmationDialog(material)
+            }
+        } else {
+            editBtn.visibility = View.GONE
+            deleteBtn.visibility = View.GONE
+        }
+
+        colorMaterialFrame.setOnClickListener {
             val intent = Intent(itemView.context, MaterialDetailsActivity::class.java)
             intent.putExtra(IntentKeys.MATERIAL_NAME.name, material.materialName)
             intent.putExtra(IntentKeys.MATERIAL_TYPE.name, material.materialType.toString())
@@ -38,6 +65,62 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             itemView.context.startActivity(intent)
         }
 
+
+
+
+
+    }
+
+    private fun showEditMaterialDialog(material: Material) {
+        val builder = AlertDialog.Builder(itemView.context)
+        builder.setTitle("Edit Material Name")
+
+        val input = EditText(itemView.context)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.setText(material.materialName)
+        builder.setView(input)
+
+        // Set up the buttons
+        builder.setPositiveButton("Save") { dialog, which ->
+            val newName = input.text.toString()
+            if (newName.isNotEmpty()) {
+
+                val db = Firebase.firestore
+
+                val coursesRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION).document(material.id)
+                coursesRef.update(MyFirestoreReferences.MATERIAL_NAME_FIELD,newName)
+                    .addOnSuccessListener {  }
+                    .addOnFailureListener { exception ->
+                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                    }
+            }
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, which ->
+            dialog.cancel()
+        }
+
+        builder.show()
+    }
+
+    private fun showDeleteConfirmationDialog(material: Material) {
+        AlertDialog.Builder(itemView.context)
+            .setTitle("Delete Material")
+            .setMessage("Are you sure you want to delete this material?")
+            .setPositiveButton("Delete") { dialog, which ->
+
+
+                val db = Firebase.firestore
+
+                val coursesRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION).document(material.id)
+                coursesRef.delete()
+                    .addOnSuccessListener {  }
+                    .addOnFailureListener { exception ->
+                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                    }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
 

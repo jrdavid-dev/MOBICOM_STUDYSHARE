@@ -13,6 +13,7 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Material
 class RecentUploadsActivity : AppCompatActivity() {
 
     private lateinit var materialAdapter: MaterialAdapter
+    private val current_user_id = "1001"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,7 +33,7 @@ class RecentUploadsActivity : AppCompatActivity() {
             .setQuery(query, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options)
+        materialAdapter = MaterialAdapter(options, current_user_id, false)
 
 
         viewBinding.recentUploadsRecyclerView.itemAnimator = null

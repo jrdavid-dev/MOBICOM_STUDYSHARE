@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class MaterialAdapter(
-    options: FirestoreRecyclerOptions<Material>): FirestoreRecyclerAdapter<Material, MaterialViewHolder>(options) {
+    options: FirestoreRecyclerOptions<Material>,
+    private val currentUserId: String,
+    private val showEditDelete: Boolean ): FirestoreRecyclerAdapter<Material, MaterialViewHolder>(options) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MaterialViewHolder {
@@ -19,7 +21,7 @@ class MaterialAdapter(
     }
 
     override fun onBindViewHolder(holder: MaterialViewHolder, position: Int, model: Material) {
-        holder.bindData(model)
+        holder.bindData(model, currentUserId, showEditDelete)
 
     }
 

@@ -1,6 +1,5 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
-
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +15,7 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Material
 class CourseDetailsActivity : AppCompatActivity() {
 
     private lateinit var materialAdapter : MaterialAdapter
+    private val current_user_id = "1001"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,19 +38,19 @@ class CourseDetailsActivity : AppCompatActivity() {
 
         val materialsRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION)
 
-        val query = materialsRef.whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId).orderBy("createdAt", Query.Direction.DESCENDING)
-
+        val query = materialsRef
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
 
         val options = FirestoreRecyclerOptions.Builder<Material>()
             .setQuery(query, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options)
+        materialAdapter = MaterialAdapter(options, current_user_id, true)
 
         viewBinding.courseDetailsMaterialRecyclerView.itemAnimator = null
         viewBinding.courseDetailsMaterialRecyclerView.adapter = materialAdapter
         viewBinding.courseDetailsMaterialRecyclerView.layoutManager = LinearLayoutManager(this)
-
     }
 
     override fun onStart() {
@@ -58,9 +58,9 @@ class CourseDetailsActivity : AppCompatActivity() {
         this.materialAdapter.startListening()
     }
 
+
     override fun onStop() {
         super.onStop()
         this.materialAdapter.stopListening()
     }
 }
-

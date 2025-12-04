@@ -41,6 +41,7 @@ class ProfileActivity : AppCompatActivity() {
         viewBinding.profileCoursesRecyclerView.adapter = profileAdapter
         viewBinding.profileCoursesRecyclerView.layoutManager = LinearLayoutManager(this)
 
+
     }
 
     override fun onStart() {

@@ -84,5 +84,29 @@
             app:layout_constraintStart_toEndOf="@+id/profileMaterialCountTv"
             app:layout_constraintTop_toBottomOf="@+id/profileCourseDetailsTv" />
 
+        <ImageView
+            android:id="@+id/profileCourseDeleteBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="20dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icons8_delete_24"
+            app:tint="#dc2626" />
+
+        <ImageView
+            android:id="@+id/profileEditCourseBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/profileCourseDeleteBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/edit"
+            app:tint="#2563eb" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
