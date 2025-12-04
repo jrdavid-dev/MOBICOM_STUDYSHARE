@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_notifs -> {
+                    navigateToNotifications()
                     true
                 }
                 R.id.nav_profile -> {
@@ -78,6 +79,9 @@ class MainActivity : AppCompatActivity() {
     // TODO add notif
     private fun navigateToProfile(){
         startActivity(Intent(this, ProfileActivity::class.java))
+    }
+    private fun navigateToNotifications(){
+        startActivity(Intent(this, NotificationsActivity::class.java))
     }
     private fun navigateToSearch() {
         startActivity(Intent(this, SearchPageActivity::class.java))

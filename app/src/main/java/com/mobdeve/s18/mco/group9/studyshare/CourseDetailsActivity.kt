@@ -14,7 +14,7 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Material
 
 class CourseDetailsActivity : AppCompatActivity() {
 
-    private lateinit var materialAdapter : MaterialAdapter
+    private lateinit var materialAdapter: MaterialAdapter
     private val current_user_id = "1001"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,8 @@ class CourseDetailsActivity : AppCompatActivity() {
         viewBinding.courseDetailsTitleTv.text = courseName
         viewBinding.courseDetailsTotalTv.text = "$materialCount Materials"
         viewBinding.courseLastUpdatedTv.text = lastUpdated
-        viewBinding.colorCourseDetailsFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(colorIcon))
+        viewBinding.colorCourseDetailsFrame.backgroundTintList =
+            ColorStateList.valueOf(Color.parseColor(colorIcon))
 
         val db = Firebase.firestore
 

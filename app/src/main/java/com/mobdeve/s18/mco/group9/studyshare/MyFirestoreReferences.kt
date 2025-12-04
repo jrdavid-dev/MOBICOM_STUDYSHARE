@@ -6,6 +6,7 @@ object MyFirestoreReferences {
     const val MATERIALS_COLLECTION = "materials"
     const val COURSES_COLLECTION = "courses"
     const val SUBSCRIPTIONS_COLLECTION = "subscriptions"
+    const val NOTIFICATIONS_COLLECTION = "notifications"
 
     const val USERNAME_FIELD = "username"
     const val FIRSTNAME_FIELD = "firstName"
@@ -32,6 +33,12 @@ object MyFirestoreReferences {
 
     const val USER_ID_FIELD = "userId"
     const val ID_FIELD = "id"
+
+    const val TYPE_FIELD = "type"
+    const val MATERIAL_ID_FIELD = "materialID"
+
+    const val AUTHOR_NAME_FIELD = "authorName"
+    const val IS_READ_FIELD = "isRead"
 }
 
 

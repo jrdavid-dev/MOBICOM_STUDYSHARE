@@ -12,7 +12,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.models.Course
 import com.mobdeve.s18.mco.group9.studyshare.models.Material
@@ -28,6 +30,8 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val editBtn : ImageView = itemView.findViewById(R.id.materialEditBtn)
     private val deleteBtn : ImageView = itemView.findViewById(R.id.materialDeleteBtn)
+    private val current_user_id = "1001"
+    private val current_user_name = "John Doe"
 
     fun bindData(material: Material, currentUserId : String, showEditDelete : Boolean) {
         uploadTitleTv.text = material.materialName
@@ -66,9 +70,6 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         }
 
 
-
-
-
     }
 
     private fun showEditMaterialDialog(material: Material) {
@@ -89,7 +90,9 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
                 val coursesRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION).document(material.id)
                 coursesRef.update(MyFirestoreReferences.MATERIAL_NAME_FIELD,newName)
-                    .addOnSuccessListener {  }
+                    .addOnSuccessListener {
+                        addEditNotification(material.courseId, material.id, material.materialName)
+                    }
                     .addOnFailureListener { exception ->
                         Log.w("CHANGE_ME", "Error getting courses", exception)
                     }
@@ -108,19 +111,132 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .setTitle("Delete Material")
             .setMessage("Are you sure you want to delete this material?")
             .setPositiveButton("Delete") { dialog, which ->
-
-
                 val db = Firebase.firestore
 
-                val coursesRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION).document(material.id)
-                coursesRef.delete()
-                    .addOnSuccessListener {  }
+                db.collection(MyFirestoreReferences.COURSES_COLLECTION)
+                    .document(material.courseId)
+                    .update(
+                        MyFirestoreReferences.MATERIAL_COUNT_FIELD, FieldValue.increment(-1),
+                        MyFirestoreReferences.UPDATED_AT_FIELD, FieldValue.serverTimestamp()
+                    )
+                    .addOnSuccessListener {
+                        Log.d("DELETE_MATERIAL", "Course material count decremented")
+
+                        // Then delete the material
+                        val materialRef = db.collection(MyFirestoreReferences.MATERIALS_COLLECTION).document(material.id)
+                        materialRef.delete()
+                            .addOnSuccessListener {
+                                Log.d("DELETE_MATERIAL", "Material deleted successfully")
+
+                                addDeleteNotification(material.courseId, material.id, material.materialName)
+                                Toast.makeText(itemView.context, "Material deleted successfully", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.e("DELETE_MATERIAL", "Error deleting material", exception)
+                                Toast.makeText(itemView.context, "Failed to delete material", Toast.LENGTH_SHORT).show()
+                            }
+                    }
                     .addOnFailureListener { exception ->
-                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                        Log.e("DELETE_MATERIAL", "Error updating course material count", exception)
+                        Toast.makeText(itemView.context, "Failed to update course", Toast.LENGTH_SHORT).show()
                     }
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    private fun addEditNotification(courseId : String, materialId : String, materialName : String){
+        val db = Firebase.firestore
+        db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId) // Query by course ID
+            .get()
+            .addOnSuccessListener { subscriptions ->
+
+                val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
+                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD) // Get user IDs
+                }
+
+                Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
+
+                subscribedUserIds.forEach { userId ->
+
+                    if (userId != current_user_id) {
+                        val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
+                        val notifId = notifsRef.id
+
+                        val type = "MATERIAL_EDIT"
+                        val notifData = hashMapOf(
+                            MyFirestoreReferences.ID_FIELD to notifId,
+                            MyFirestoreReferences.USER_ID_FIELD to userId,
+                            MyFirestoreReferences.COURSE_ID_FIELD to courseId,
+                            MyFirestoreReferences.TYPE_FIELD to type,
+                            MyFirestoreReferences.MATERIAL_ID_FIELD to materialId,
+                            MyFirestoreReferences.MATERIAL_NAME_FIELD to materialName,
+                            MyFirestoreReferences.AUTHOR_NAME_FIELD to current_user_name,
+                            MyFirestoreReferences.IS_READ_FIELD to false,
+                            MyFirestoreReferences.CREATED_AT_FIELD to FieldValue.serverTimestamp()
+                        )
+
+                        notifsRef.set(notifData)
+                            .addOnSuccessListener {
+                                Log.d("NOTIFICATIONS", "Notification sent to user: $userId")
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.w("NOTIFICATIONS", "Error adding notification for user: $userId", exception)
+                            }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
+            }
+    }
+
+    private fun addDeleteNotification(courseId : String, materialId : String, materialName : String){
+        val db = Firebase.firestore
+        db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId)
+            .get()
+            .addOnSuccessListener { subscriptions ->
+
+                val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
+                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD)
+                }
+
+                Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
+
+                subscribedUserIds.forEach { userId ->
+
+                    if (userId != current_user_id) {
+                        val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
+                        val notifId = notifsRef.id
+
+                        val type = "MATERIAL_DELETE"
+                        val notifData = hashMapOf(
+                            MyFirestoreReferences.ID_FIELD to notifId,
+                            MyFirestoreReferences.USER_ID_FIELD to userId,
+                            MyFirestoreReferences.COURSE_ID_FIELD to courseId,
+                            MyFirestoreReferences.TYPE_FIELD to type,
+                            MyFirestoreReferences.MATERIAL_ID_FIELD to materialId,
+                            MyFirestoreReferences.MATERIAL_NAME_FIELD to materialName,
+                            MyFirestoreReferences.AUTHOR_NAME_FIELD to current_user_name,
+                            MyFirestoreReferences.IS_READ_FIELD to false,
+                            MyFirestoreReferences.CREATED_AT_FIELD to FieldValue.serverTimestamp()
+                        )
+
+                        notifsRef.set(notifData)
+                            .addOnSuccessListener {
+                                Log.d("NOTIFICATIONS", "Notification sent to user: $userId")
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.w("NOTIFICATIONS", "Error adding notification for user: $userId", exception)
+                            }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
+            }
     }
 
 
