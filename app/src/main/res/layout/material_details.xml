@@ -1,233 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F8FAFC"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/materialDetailsHeaderTv"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#FFFFFF"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="start|center_vertical"
-        android:paddingLeft="20dp"
-        android:text="Material Details"
-        android:textSize="18sp" />
-
-    <FrameLayout
-        android:id="@+id/colormMaterialDetailsFrame"
-        android:layout_width="372dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_frame">
-
-        <ImageView
-            android:id="@+id/notebookIv"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/notebook" />
-
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/MaterialDetailsTitleTv"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Material Title"
-        android:textSize="18sp" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="372dp"
-        android:layout_height="195dp"
-        android:layout_gravity="center"
-        android:background="@drawable/materialdetails_frame">
-
-        <ImageView
-            android:id="@+id/materialCourseIv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/book"
-            app:tint="#600F172A" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
 
         <TextView
-            android:id="@+id/materialHeaderNameTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Material Name"
-            android:textColor="#600F172A"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialCourseIv"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/materialDetailsHeaderTv"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#FFFFFF"
+            android:elevation="2dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center_vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:text="Material Details"
+            android:textColor="#1E293B"
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/materialNameTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialCourseIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialHeaderNameTv" />
-
-        <TextView
-            android:id="@+id/materialDetailsHeaderTypeTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Type"
-            android:textColor="#600F172A"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsTypeIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialNameTv" />
-
-        <TextView
-            android:id="@+id/materialDetailsTypeTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsTypeIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderTypeTv" />
-
-        <ImageView
-            android:id="@+id/materialDetailsTypeIv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="15dp"
+        <FrameLayout
+            android:id="@+id/colormMaterialDetailsFrame"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCourseIv"
-            app:srcCompat="@drawable/notebook"
-            app:tint="#600F172A" />
-
-        <ImageView
-            android:id="@+id/materialDetailsAuthorIv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsTypeIv"
-            app:srcCompat="@drawable/person"
-            app:tint="#600F172A" />
-
-        <TextView
-            android:id="@+id/materialDetailsAuthorHeaderTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Uploaded By"
-            android:textColor="#600F172A"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsAuthorIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsTypeTv" />
-
-        <TextView
-            android:id="@+id/materialDetailsAuthorTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsAuthorIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorHeaderTv" />
-
-        <ImageView
-            android:id="@+id/materialDetailsDateIv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorIv"
-            app:srcCompat="@drawable/date"
-            app:tint="#600F172A" />
-
-        <TextView
-            android:id="@+id/materialDetailsHeaderDateTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Date"
-            android:textColor="#600F172A"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsDateIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorTv" />
-
-        <TextView
-            android:id="@+id/materialDetailsDateTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/materialDetailsDateIv"
-            app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderDateTv" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <FrameLayout
-        android:id="@+id/downloadBtn"
-        android:layout_width="372dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/gradient_button"
-        android:clickable="true"
-        android:focusable="true">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_frame">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/stat_sys_download_done"
-                android:tint="@android:color/white" />
+                android:id="@+id/notebookIv"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/notebook"
+                app:tint="#FFFFFF" />
+        </FrameLayout>
 
-            <TextView
+        <TextView
+            android:id="@+id/MaterialDetailsTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Information"
+            android:textColor="#1E293B"
+            android:textSize="18sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="24dp">
+
+                <ImageView
+                    android:id="@+id/materialCourseIv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintBottom_toBottomOf="@+id/materialNameTv"
+                    app:srcCompat="@drawable/book"
+                    app:tint="#0891B2" />
+
+                <TextView
+                    android:id="@+id/materialHeaderNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Material Name"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/materialCourseIv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/materialNameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Intro to Android"
+                    android:textColor="#1E293B"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/materialHeaderNameTv" />
+
+                <View
+                    android:id="@+id/div1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#F1F5F9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/materialNameTv" />
+
+
+                <ImageView
+                    android:id="@+id/materialDetailsTypeIv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintStart_toStartOf="@+id/materialCourseIv"
+                    app:layout_constraintTop_toTopOf="@+id/materialDetailsHeaderTypeTv"
+                    app:layout_constraintBottom_toBottomOf="@+id/materialDetailsTypeTv"
+                    app:srcCompat="@drawable/notebook"
+                    app:tint="#0891B2" />
+
+                <TextView
+                    android:id="@+id/materialDetailsHeaderTypeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Type"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/div1" />
+
+                <TextView
+                    android:id="@+id/materialDetailsTypeTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="PDF Document"
+                    android:textColor="#1E293B"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderTypeTv" />
+
+                <View
+                    android:id="@+id/div2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#F1F5F9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/materialDetailsTypeTv" />
+
+
+                <ImageView
+                    android:id="@+id/materialDetailsAuthorIv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintStart_toStartOf="@+id/materialCourseIv"
+                    app:layout_constraintTop_toTopOf="@+id/materialDetailsAuthorHeaderTv"
+                    app:layout_constraintBottom_toBottomOf="@+id/materialDetailsAuthorTv"
+                    app:srcCompat="@drawable/person"
+                    app:tint="#0891B2" />
+
+                <TextView
+                    android:id="@+id/materialDetailsAuthorHeaderTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Uploaded By"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/div2" />
+
+                <TextView
+                    android:id="@+id/materialDetailsAuthorTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="John Doe"
+                    android:textColor="#1E293B"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorHeaderTv" />
+
+                <View
+                    android:id="@+id/div3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#F1F5F9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/materialDetailsAuthorTv" />
+
+                <ImageView
+                    android:id="@+id/materialDetailsDateIv"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintStart_toStartOf="@+id/materialCourseIv"
+                    app:layout_constraintTop_toTopOf="@+id/materialDetailsHeaderDateTv"
+                    app:layout_constraintBottom_toBottomOf="@+id/materialDetailsDateTv"
+                    app:srcCompat="@android:drawable/ic_menu_my_calendar"
+                    app:tint="#0891B2" />
+
+                <TextView
+                    android:id="@+id/materialDetailsHeaderDateTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Date Uploaded"
+                    android:textColor="#64748B"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/div3" />
+
+                <TextView
+                    android:id="@+id/materialDetailsDateTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Dec 12, 2024"
+                    android:textColor="#1E293B"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialHeaderNameTv"
+                    app:layout_constraintTop_toBottomOf="@+id/materialDetailsHeaderDateTv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:id="@+id/downloadBtn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/gradient_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Download Material"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </FrameLayout>
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-</LinearLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/stat_sys_download_done"
+                    app:tint="@android:color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Download Material"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+</ScrollView>
