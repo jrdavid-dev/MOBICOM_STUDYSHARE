@@ -152,7 +152,7 @@ class UploadMaterialActivity : AppCompatActivity() {
             }
             .setPositiveButton("OK") { dialog, _ ->
                 if (selectedMaterialTypePosition >= 0) {
-                    viewBinding.uploadMaterialTypeTv.text = materialTypes[selectedMaterialTypePosition]
+                    viewBinding.uploadMaterialTypeTv.setText(materialTypes[selectedMaterialTypePosition])
                     viewBinding.uploadMaterialTypeTv.setTextColor(getColor(android.R.color.black))
                 }
                 dialog.dismiss()
@@ -201,7 +201,7 @@ class UploadMaterialActivity : AppCompatActivity() {
                     val colorName = colorNames[selectedColorPosition]
                     val colorRes = colorResources[selectedColorPosition]
 
-                    viewBinding.uploadMaterialColorIconEv.text = colorName
+                    viewBinding.uploadMaterialColorIconEv.setText(colorName)
                     viewBinding.uploadMaterialColorIconEv.setTextColor(getColor(android.R.color.black))
 
                     val iconDrawable = GradientDrawable().apply {
