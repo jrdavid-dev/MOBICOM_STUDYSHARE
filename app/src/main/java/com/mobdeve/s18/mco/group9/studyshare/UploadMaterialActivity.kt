@@ -61,7 +61,7 @@ class UploadMaterialActivity : AppCompatActivity() {
         }
 
 
-        val materialTypes = arrayOf("Lecture Notes", "Handouts", "Reviewers")
+        val materialTypes = arrayOf("Notes", "Handouts", "Reviewers")
 
         var selectedPosition = -1
 
@@ -229,6 +229,16 @@ class UploadMaterialActivity : AppCompatActivity() {
                         .addOnFailureListener { exception ->
                             Log.w("CHANGE_ME", "Error getting courses", exception)
                         }
+
+                    db.collection(MyFirestoreReferences.COURSES_COLLECTION)
+                        .document(courseId.toString())
+                        .update(MyFirestoreReferences.MATERIAL_COUNT_FIELD, FieldValue.increment(1),
+                            MyFirestoreReferences.UPDATED_AT_FIELD, FieldValue.serverTimestamp())
+                        .addOnSuccessListener {  }
+                        .addOnFailureListener { exception ->
+                            Log.w("CHANGE_ME", "Error getting courses", exception)
+                        }
+
 
                 }
             }.addOnFailureListener { exception ->

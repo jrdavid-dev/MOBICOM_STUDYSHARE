@@ -83,7 +83,7 @@
             android:clickable="true"
             android:gravity="center"
             android:text="All"
-            android:textColor="#FFFDFD"
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/manageSubscriptionsSearchContainer" />
@@ -97,7 +97,7 @@
             android:background="@drawable/rounded_searchpage_buttons"
             android:clickable="true"
             android:gravity="center"
-            android:text="Lecture Notes"
+            android:text="Notes"
             android:textColor="#600F172A"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/searchPageAllBtn"

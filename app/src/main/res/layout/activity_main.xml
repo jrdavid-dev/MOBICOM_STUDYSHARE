@@ -86,16 +86,6 @@
                 android:paddingEnd="12dp"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/filterIv"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="2dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                app:srcCompat="@drawable/filter" />
-
 
         </LinearLayout>
 

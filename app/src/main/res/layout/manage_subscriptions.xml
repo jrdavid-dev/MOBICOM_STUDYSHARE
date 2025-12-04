@@ -6,6 +6,7 @@
     android:background="#F8FAFC"
     android:orientation="vertical">
 
+    <!-- Header -->
     <TextView
         android:id="@+id/manageSubscriptionsHeaderTv3"
         android:layout_width="match_parent"
@@ -17,21 +18,42 @@
         android:text="Manage Subscriptions"
         android:textSize="18sp" />
 
+    <!-- TabLayout for switching between subscribed and available courses -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:tabIndicatorColor="#0891B2"
+        app:tabSelectedTextColor="#0891B2"
+        app:tabTextColor="#666666"
+        app:tabMode="fixed">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Courses" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available Courses" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <!-- Search Container -->
     <LinearLayout
         android:id="@+id/manageSubscriptionsSearchContainer"
-        android:layout_width="372dp"
+        android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:layout_gravity="left"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/search_button_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:paddingEnd="12dp">
 
         <ImageView
             android:id="@+id/searchIv"
@@ -40,7 +62,6 @@
             android:layout_marginTop="2dp"
             app:srcCompat="@drawable/search"
             app:tint="#ABA5B6" />
-
 
         <EditText
             android:id="@+id/searchButton"
@@ -60,6 +81,7 @@
 
     </LinearLayout>
 
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/manageSubscriptionsBrowseTv"
         android:layout_width="wrap_content"
@@ -71,9 +93,14 @@
         android:textColor="#800F172A"
         android:textSize="12sp" />
 
+    <!-- RecyclerView - This will show different content based on selected tab -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/manageSubscriptionsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="10dp"
+        android:clipToPadding="false" />
 
 </LinearLayout>
