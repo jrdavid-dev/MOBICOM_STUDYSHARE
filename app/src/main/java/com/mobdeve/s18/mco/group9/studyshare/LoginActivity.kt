@@ -1,19 +1,21 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s18.mco.group9.studyshare.databinding.ActivityLoginBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val authRepo = AuthRepository()
+    private val auth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // IMPORTANT: must match activity_login.xml
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -22,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.registerLinkTv.setOnClickListener {
-            // TODO: Start RegisterActivity
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
@@ -51,19 +53,25 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUser(email: String, password: String) {
         authRepo.loginUser(email, password) { success, user, error ->
             if (success) {
-                Toast.makeText(
-                    this,
-                    "Welcome back ${user?.firstName ?: ""}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                goToNextStep()
+                val uid = auth.currentUser?.uid
+                if (uid != null) {
+                    Toast.makeText(
+                        this,
+                        "Welcome back ${user?.firstName ?: ""}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    goToNextStep(uid)
+                }
             } else {
                 Toast.makeText(this, error ?: "Login failed", Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    private fun goToNextStep() {
-
+    private fun goToNextStep(uid: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("USER_ID", uid)
+        startActivity(intent)
+        finish()
     }
 }

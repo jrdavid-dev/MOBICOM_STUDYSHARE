@@ -16,11 +16,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+
 
 class SearchPageActivity : AppCompatActivity() {
 
     private lateinit var materialAdapter: MaterialAdapter
-    private val current_user_id = "1001"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
     private lateinit var viewBinding: SearchPageBinding
     private val db = Firebase.firestore
 
@@ -32,6 +36,12 @@ class SearchPageActivity : AppCompatActivity() {
 
         viewBinding = SearchPageBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        if (current_user_id == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
 
         setupRecyclerView()
         setupSearch()
@@ -51,7 +61,7 @@ class SearchPageActivity : AppCompatActivity() {
             .setQuery(query, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options, current_user_id, false)
+        materialAdapter = MaterialAdapter(options, current_user_id ?: "", false)
 
         viewBinding.searchMaterialsRecyclerView.itemAnimator = null
         viewBinding.searchMaterialsRecyclerView.adapter = materialAdapter

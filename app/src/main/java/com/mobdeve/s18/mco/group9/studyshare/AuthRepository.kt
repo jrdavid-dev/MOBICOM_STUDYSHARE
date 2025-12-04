@@ -16,11 +16,16 @@ class AuthRepository {
         lastName: String,
         email: String,
         password: String,
-        onResult: (Boolean, String?) -> Unit
+        onResult: (Boolean, String?, String?) -> Unit  // add uid as third param
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                val uid = auth.currentUser?.uid ?: return@addOnSuccessListener
+                val uid = auth.currentUser?.uid
+
+                if (uid == null) {
+                    onResult(false, "UID was null", null)
+                    return@addOnSuccessListener
+                }
 
                 val username = "${firstName.lowercase()}_${lastName.lowercase()}"
 
@@ -30,19 +35,20 @@ class AuthRepository {
                     MyFirestoreReferences.LASTNAME_FIELD to lastName,
                     MyFirestoreReferences.EMAIL_FIELD to email,
                     MyFirestoreReferences.ID_FIELD to uid,
-                    MyFirestoreReferences.CREATED_AT_FIELD to Date()
+                    MyFirestoreReferences.CREATED_AT_FIELD to java.util.Date()
                 )
 
                 db.collection(MyFirestoreReferences.USERS_COLLECTION)
                     .document(uid)
                     .set(userData)
-                    .addOnSuccessListener { onResult(true, null) }
-                    .addOnFailureListener { e -> onResult(false, e.message) }
+                    .addOnSuccessListener { onResult(true, null, uid) }
+                    .addOnFailureListener { e -> onResult(false, e.message, null) }
             }
             .addOnFailureListener { e ->
-                onResult(false, e.message)
+                onResult(false, e.message, null)
             }
     }
+
 
     fun loginUser(
         email: String,

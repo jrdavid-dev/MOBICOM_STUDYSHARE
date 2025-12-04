@@ -19,11 +19,7 @@ import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.databinding.UploadMaterialBinding
 import android.provider.OpenableColumns
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.firebase.firestore.Query
 import com.google.firebase.storage.storage
-import com.mobdeve.s18.mco.group9.studyshare.models.Course
 
 class UploadMaterialActivity : AppCompatActivity() {
 
@@ -410,8 +406,6 @@ class UploadMaterialActivity : AppCompatActivity() {
                 viewBinding.uploadIv.setImageResource(android.R.drawable.stat_sys_upload_done)
 
             }
-
-
     }
 
     private fun saveMaterialToFirestore(
@@ -460,10 +454,6 @@ class UploadMaterialActivity : AppCompatActivity() {
                         Toast.makeText(this, "Material uploaded but failed to update course", Toast.LENGTH_SHORT).show()
                         finish()
                     }
-
-                addNotification(materialId, materialName)
-
-
             }
             .addOnFailureListener { exception ->
                 Log.w("UPLOAD_MATERIAL", "Error saving material", exception)
@@ -474,58 +464,8 @@ class UploadMaterialActivity : AppCompatActivity() {
                 viewBinding.uploadText.text = "Upload"
                 viewBinding.uploadIv.setImageResource(android.R.drawable.stat_sys_upload_done)
             }
-
-
-
-
     }
-    private fun addNotification(materialId : String, materialName : String){
-        val db = Firebase.firestore
-        db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
-            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, selectedCourseId) // Query by course ID
-            .get()
-            .addOnSuccessListener { subscriptions ->
 
-                val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
-                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD) // Get user IDs
-                }
-
-                Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
-
-                // Create notification for each subscribed user
-                subscribedUserIds.forEach { userId ->
-                    // Skip creating notification for the current user (the uploader)
-                    if (userId != current_user_id) {
-                        val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
-                        val notifId = notifsRef.id
-
-                        val type = "MATERIAL_UPLOAD"
-                        val notifData = hashMapOf(
-                            MyFirestoreReferences.ID_FIELD to notifId,
-                            MyFirestoreReferences.USER_ID_FIELD to userId,
-                            MyFirestoreReferences.COURSE_ID_FIELD to selectedCourseId,
-                            MyFirestoreReferences.TYPE_FIELD to type,
-                            MyFirestoreReferences.MATERIAL_ID_FIELD to materialId,
-                            MyFirestoreReferences.MATERIAL_NAME_FIELD to materialName,
-                            MyFirestoreReferences.AUTHOR_NAME_FIELD to current_user_name,
-                            MyFirestoreReferences.IS_READ_FIELD to false,
-                            MyFirestoreReferences.CREATED_AT_FIELD to FieldValue.serverTimestamp()
-                        )
-
-                        notifsRef.set(notifData)
-                            .addOnSuccessListener {
-                                Log.d("NOTIFICATIONS", "Notification sent to user: $userId")
-                            }
-                            .addOnFailureListener { exception ->
-                                Log.w("NOTIFICATIONS", "Error adding notification for user: $userId", exception)
-                            }
-                    }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
-            }
-    }
     private fun getFileName(uri: Uri): String {
         var fileName = "unknown"
         contentResolver.query(uri, null, null, null, null)?.use { cursor ->

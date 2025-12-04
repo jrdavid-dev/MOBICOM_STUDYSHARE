@@ -1,5 +1,7 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
+import android.content.Intent
+import com.google.firebase.auth.FirebaseAuth
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +15,9 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Material
 class RecentUploadsActivity : AppCompatActivity() {
 
     private lateinit var materialAdapter: MaterialAdapter
-    private val current_user_id = "1001"
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -21,6 +25,13 @@ class RecentUploadsActivity : AppCompatActivity() {
 
         val viewBinding: RecentUploadsBinding = RecentUploadsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+
+        if (current_user_id == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
 
         val db = Firebase.firestore
 
@@ -33,7 +44,7 @@ class RecentUploadsActivity : AppCompatActivity() {
             .setQuery(query, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options, current_user_id, false)
+        materialAdapter = MaterialAdapter(options, current_user_id ?: "", false)
 
 
         viewBinding.recentUploadsRecyclerView.itemAnimator = null

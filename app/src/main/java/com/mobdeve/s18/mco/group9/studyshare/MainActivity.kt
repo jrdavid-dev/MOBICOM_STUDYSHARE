@@ -16,6 +16,7 @@ import com.mobdeve.s18.mco.group9.studyshare.databinding.ActivityMainBinding
 import com.mobdeve.s18.mco.group9.studyshare.databinding.ManageSubscriptionsBinding
 import com.mobdeve.s18.mco.group9.studyshare.models.Material
 import com.mobdeve.s18.mco.group9.studyshare.models.Course
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,9 +25,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var materialAdapter : MaterialAdapter
     private lateinit var courseAdapter: CourseAdapter
     private lateinit var viewBinding: ActivityMainBinding
-    private val current_user_id = "1001"
+    private val current_user_id: String?
+        get() = auth.currentUser?.uid
 
     private val db by lazy { Firebase.firestore }
+    private val auth by lazy { FirebaseAuth.getInstance() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        if (current_user_id == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
 
         loadRecentUploads()
         loadSubscribedCourses()
@@ -110,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             .setQuery(materialsQuery, Material::class.java)
             .build()
 
-        materialAdapter = MaterialAdapter(options, current_user_id, false)
+        materialAdapter = MaterialAdapter(options, current_user_id ?: "", false)
         viewBinding.uploadsRecyclerView.itemAnimator = null
 
 
