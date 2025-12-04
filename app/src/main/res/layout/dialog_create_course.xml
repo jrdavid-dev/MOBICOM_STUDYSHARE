@@ -1,46 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp">
 
-    <EditText
-        android:id="@+id/et_course_name"
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Create New Course"
+        android:textColor="#1E293B"
+        android:textSize="20sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:hint="Course Name"
-        android:inputType="text" />
+        app:boxStrokeColor="#0891B2"
+        app:boxStrokeWidthFocused="2dp"
+        app:hintTextColor="#0891B2"
+        app:startIconDrawable="@android:drawable/ic_menu_edit"
+        app:startIconTint="#64748B"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/et_course_description"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_course_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:textColor="#1E293B" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        android:minLines="2" />
+        android:layout_marginBottom="20dp"
+        android:hint="Description (Optional)"
+        app:boxStrokeColor="#0891B2"
+        app:boxStrokeWidthFocused="2dp"
+        app:hintTextColor="#0891B2"
+        app:startIconDrawable="@android:drawable/ic_menu_info_details"
+        app:startIconTint="#64748B"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_course_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:textColor="#1E293B" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Select Color:"
-        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Select Course Color"
+        android:textColor="#334155"
         android:textSize="14sp" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:clipToPadding="false"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
 
         <LinearLayout
             android:id="@+id/ll_color_icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp" />
+            android:padding="4dp" />
     </HorizontalScrollView>
 
 </LinearLayout>
