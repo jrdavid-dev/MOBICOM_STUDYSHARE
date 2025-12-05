@@ -18,8 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.models.Course
-import org.w3c.dom.Text
-import java.util.Date
+
 
 
 class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

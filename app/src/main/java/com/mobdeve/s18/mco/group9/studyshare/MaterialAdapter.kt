@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.mobdeve.s18.mco.group9.studyshare.models.Material
-import androidx.recyclerview.widget.RecyclerView
+
 
 
 class MaterialAdapter(

@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.mobdeve.s18.mco.group9.studyshare.databinding.NotificationsPageBinding
-
 import com.mobdeve.s18.mco.group9.studyshare.models.Notification
 
 class NotificationsActivity : AppCompatActivity() {
