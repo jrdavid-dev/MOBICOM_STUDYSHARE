@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "857006249430",
+    "project_id": "studyshare-a5f72",
+    "storage_bucket": "studyshare-a5f72.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857006249430:android:3f74a213b2ac90b1b8c077",
+        "android_client_info": {
+          "package_name": "com.mobdeve.s18.mco.group9.studyshare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDURzVs5PwmG992pveAIeRv0goCQFmJE38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
