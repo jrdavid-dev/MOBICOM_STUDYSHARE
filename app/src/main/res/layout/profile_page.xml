@@ -5,19 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/editBtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/editing"
+        app:tint="#1E293B" />
 
     <TextView
         android:id="@+id/profileHeaderTv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:background="#FFFFFF"
         android:elevation="4dp"
         android:fontFamily="@font/roboto_bold"
+        android:foregroundGravity="center"
         android:gravity="center"
         android:text="My Profile"
         android:textColor="#1E293B"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
@@ -31,6 +44,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#F8FAFC"
             android:orientation="vertical"
             android:paddingBottom="40dp">
 
