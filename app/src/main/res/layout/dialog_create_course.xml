@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:hint="Description (Optional)"
+        android:hint="Description"
         app:boxStrokeColor="#0891B2"
         app:boxStrokeWidthFocused="2dp"
         app:hintTextColor="#0891B2"
