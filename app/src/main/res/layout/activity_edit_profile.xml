@@ -8,7 +8,7 @@
     android:padding="24dp">
 
     <ImageView
-        android:id="@+id/menuBtn"
+        android:id="@+id/profileBtn"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="16dp"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:fontFamily="@font/roboto"
-                android:hint="Name"
+                android:hint="First Name"
                 android:inputType="textPersonName"
                 android:paddingBottom="12dp"
                 android:textColor="#334155"
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:fontFamily="@font/roboto"
-                android:hint="Surname"
+                android:hint="Last Name"
                 android:inputType="textPersonName"
                 android:paddingBottom="12dp"
                 android:textColor="#334155"
@@ -215,12 +215,11 @@
             android:layout_marginBottom="16dp">
 
             <EditText
-                android:id="@+id/courseEt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:fontFamily="@font/roboto"
-                android:hint="Course"
+                android:hint="Description"
                 android:inputType="text"
                 android:paddingBottom="12dp"
                 android:textColor="#334155"
@@ -295,44 +294,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/mobileEt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:fontFamily="@font/roboto"
-                android:hint="Mobile Number"
-                android:inputType="phone"
-                android:paddingBottom="12dp"
-                android:textColor="#334155"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/mobileDivider"
-                app:layout_constraintEnd_toStartOf="@+id/editMobileBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/editMobileBtn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="@+id/mobileEt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/mobileEt"
-                app:srcCompat="@drawable/editing"
-                app:tint="#64748B" />
-
-            <View
-                android:id="@+id/mobileDivider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#CBD5E1"
-                app:layout_constraintBottom_toBottomOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

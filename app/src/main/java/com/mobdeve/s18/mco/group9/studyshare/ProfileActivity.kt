@@ -34,6 +34,12 @@ class ProfileActivity : AppCompatActivity() {
         setupLogout()
         loadUserProfile()
         loadUserCourses()
+
+        binding.editBtn.setOnClickListener {
+            val intent = Intent(this, EditActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setupLogout() {
