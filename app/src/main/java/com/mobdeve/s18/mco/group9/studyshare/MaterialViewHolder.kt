@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Paint
 import android.text.InputType
 import android.util.Log
 import android.view.View
@@ -116,6 +117,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 coursesRef.update(MyFirestoreReferences.MATERIAL_NAME_FIELD,newName)
                     .addOnSuccessListener {
                         addEditNotification(material.courseId, material.id, material.materialName)
+                        uploadTitleTv.text = newName
                     }
                     .addOnFailureListener { exception ->
                         Log.w("CHANGE_ME", "Error getting courses", exception)
@@ -154,6 +156,18 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
                                 addDeleteNotification(material.courseId, material.id, material.materialName)
                                 Toast.makeText(itemView.context, "Material deleted successfully", Toast.LENGTH_SHORT).show()
+
+                                uploadTitleTv.setTextColor(Color.GRAY)
+                                uploadTypeTv.setTextColor(Color.GRAY)
+                                uploadDateTv.setTextColor(Color.GRAY)
+                                uploadAuthorTv.setTextColor(Color.GRAY)
+                                colorMaterialFrame.alpha = 0.3f
+
+                                uploadTitleTv.paintFlags = uploadTitleTv.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+                                itemView.isEnabled = false
+                                editBtn.isEnabled = false
+                                deleteBtn.isEnabled = false
                             }
                             .addOnFailureListener { exception ->
                                 Log.e("DELETE_MATERIAL", "Error deleting material", exception)
