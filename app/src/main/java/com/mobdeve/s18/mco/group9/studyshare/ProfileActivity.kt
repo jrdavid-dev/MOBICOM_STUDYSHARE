@@ -71,6 +71,7 @@ class ProfileActivity : AppCompatActivity() {
 
                 val firstName = doc.getString(MyFirestoreReferences.FIRSTNAME_FIELD) ?: ""
                 val lastName = doc.getString(MyFirestoreReferences.LASTNAME_FIELD) ?: ""
+                val username = doc.getString(MyFirestoreReferences.USERNAME_FIELD) ?: ""
 
                 val initials = "${firstName.firstOrNull() ?: ""}${lastName.firstOrNull() ?: ""}".uppercase()
 
@@ -78,9 +79,17 @@ class ProfileActivity : AppCompatActivity() {
                 binding.profileNameTv.text = "$firstName $lastName"
 
 
-
+                binding.editBtn.setOnClickListener {
+                    val intent = Intent(this, EditActivity::class.java).apply {
+                        putExtra("firstName", firstName)
+                        putExtra("lastName", lastName)
+                        putExtra("username", username)
+                    }
+                    startActivity(intent)
+                }
             }
     }
+
 
     private fun loadUserCourses() {
         val userId = current_user_id ?: return
