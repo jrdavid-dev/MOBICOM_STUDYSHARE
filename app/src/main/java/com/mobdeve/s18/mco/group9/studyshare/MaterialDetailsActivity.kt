@@ -1,7 +1,10 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
 import android.app.DownloadManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
@@ -15,16 +18,65 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+
 class MaterialDetailsActivity : AppCompatActivity() {
 
     private val STORAGE_PERMISSION_CODE = 100
     private var pendingFileUrl: String? = null
     private var pendingFileName: String? = null
+    private var downloadId: Long = -1
+    private lateinit var viewBinding: MaterialDetailsBinding
+
+    // BroadcastReceiver to listen for download completion
+    private val downloadCompleteReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+
+            if (id == downloadId) {
+                val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                val query = DownloadManager.Query().setFilterById(downloadId)
+                val cursor = downloadManager.query(query)
+
+                if (cursor.moveToFirst()) {
+                    val columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+                    val status = cursor.getInt(columnIndex)
+
+                    when (status) {
+                        DownloadManager.STATUS_SUCCESSFUL -> {
+                            // Re-enable button and update UI
+                            viewBinding.downloadBtn.isEnabled = true
+                            viewBinding.downloadTv.text = "Download Material"
+                            viewBinding.downloadIv.setImageResource(android.R.drawable.stat_sys_download_done)
+
+                            Toast.makeText(
+                                this@MaterialDetailsActivity,
+                                "Downloaded successfully!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        DownloadManager.STATUS_FAILED -> {
+                            // Re-enable button and update UI
+                            viewBinding.downloadBtn.isEnabled = true
+                            viewBinding.downloadTv.text = "Download Material"
+                            viewBinding.downloadIv.setImageResource(android.R.drawable.stat_sys_download_done)
+
+                            Toast.makeText(
+                                this@MaterialDetailsActivity,
+                                "Download failed",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+                cursor.close()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewBinding: MaterialDetailsBinding = MaterialDetailsBinding.inflate(layoutInflater)
+        viewBinding = MaterialDetailsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
         val materialName = intent.getStringExtra(IntentKeys.MATERIAL_NAME.name)
@@ -41,7 +93,19 @@ class MaterialDetailsActivity : AppCompatActivity() {
         viewBinding.materialDetailsDateTv.text = materialDate
         viewBinding.colormMaterialDetailsFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(colorIcon))
 
-        // ... your existing code ...
+        // Register the BroadcastReceiver
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(
+                downloadCompleteReceiver,
+                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+                Context.RECEIVER_NOT_EXPORTED
+            )
+        } else {
+            registerReceiver(
+                downloadCompleteReceiver,
+                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+            )
+        }
 
         viewBinding.downloadBtn.setOnClickListener {
             if (fileUrl.isNullOrEmpty() || fileName.isNullOrEmpty()) {
@@ -49,16 +113,12 @@ class MaterialDetailsActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Store for later use in permission callback
             pendingFileUrl = fileUrl
             pendingFileName = fileName
 
-            // Check Android version and permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                // Android 10+ doesn't need WRITE_EXTERNAL_STORAGE
                 downloadFileToDevice(fileUrl, fileName)
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                // Android 6-9 needs runtime permission
                 if (ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -66,7 +126,6 @@ class MaterialDetailsActivity : AppCompatActivity() {
                 ) {
                     downloadFileToDevice(fileUrl, fileName)
                 } else {
-                    // Request permission
                     ActivityCompat.requestPermissions(
                         this,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -74,13 +133,11 @@ class MaterialDetailsActivity : AppCompatActivity() {
                     )
                 }
             } else {
-                // Below Android 6 - permission granted at install time
                 downloadFileToDevice(fileUrl, fileName)
             }
         }
     }
 
-    // Handle permission result
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -90,7 +147,6 @@ class MaterialDetailsActivity : AppCompatActivity() {
 
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted - download the file
                 if (pendingFileUrl != null && pendingFileName != null) {
                     downloadFileToDevice(pendingFileUrl!!, pendingFileName!!)
                 }
@@ -105,6 +161,11 @@ class MaterialDetailsActivity : AppCompatActivity() {
     }
 
     private fun downloadFileToDevice(fileUrl: String, fileName: String) {
+        // Disable button and show downloading state
+        viewBinding.downloadBtn.isEnabled = false
+        viewBinding.downloadTv.text = "Downloading..."
+        viewBinding.downloadIv.setImageResource(R.drawable.load)
+
         val request = DownloadManager.Request(Uri.parse(fileUrl))
             .setTitle(fileName)
             .setDescription("Downloading material...")
@@ -114,8 +175,14 @@ class MaterialDetailsActivity : AppCompatActivity() {
             .setAllowedOverRoaming(true)
 
         val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        downloadManager.enqueue(request)
+        downloadId = downloadManager.enqueue(request)
 
         Toast.makeText(this, "Downloading $fileName...", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Unregister the receiver to avoid memory leaks
+        unregisterReceiver(downloadCompleteReceiver)
     }
 }
