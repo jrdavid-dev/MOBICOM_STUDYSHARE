@@ -1,6 +1,8 @@
 package com.mobdeve.s18.mco.group9.studyshare
 
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Typeface
 import android.util.Log
 import android.view.View
@@ -21,7 +23,7 @@ class NotificationsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     private val notifCreatedAtTv: TextView = itemView.findViewById(R.id.notifCreatedAtTv)
     private val unreadIndicator: View = itemView.findViewById(R.id.unreadIndicator)
     private val notifRecyclerView: View = itemView.findViewById(R.id.notifRecyclerView)
-
+    private val notifFrame: FrameLayout = itemView.findViewById(R.id.notifFrame)
     private val db = Firebase.firestore
     private var courseName: String = "Unknown Course"
 
@@ -76,30 +78,35 @@ class NotificationsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
                 notifTypeNameTv.text = "New Material Uploaded"
                 notifNameTv.text = courseName
                 notifMessageTv.text = notification.materialName
+                notifFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#10B981"))
             }
 
             "MATERIAL_EDIT" -> {
                 notifTypeNameTv.text = "Material Updated"
                 notifNameTv.text = notification.materialName
                 notifMessageTv.text = "The material has been updated"
+                notifFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F59E0B"))
             }
 
             "MATERIAL_DELETE" -> {
                 notifTypeNameTv.text = "Material Removed"
                 notifNameTv.text = notification.materialName
                 notifMessageTv.text = "The material has been deleted"
+                notifFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EF4444"))
             }
 
             "COURSE_EDIT" -> {
                 notifTypeNameTv.text = "Course Updated"
                 notifNameTv.text = courseName
                 notifMessageTv.text = "The course has been updated"
+                notifFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F59E0B"))
             }
 
             "COURSE_DELETE" -> {
                 notifTypeNameTv.text = "Course Removed"
                 notifNameTv.text = courseName
                 notifMessageTv.text = "The course has been deleted"
+                notifFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EF4444"))
             }
         }
     }

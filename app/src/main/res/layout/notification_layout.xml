@@ -21,10 +21,11 @@
 
         <ImageView
             android:id="@+id/notifIv"
-            app:srcCompat="@drawable/white_book"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            app:tint="#FFFFFF"
+            app:srcCompat="@drawable/notification" />
 
     </FrameLayout>
 

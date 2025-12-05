@@ -27,11 +27,30 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
     private val current_user_id: String?
         get() = auth.currentUser?.uid
 
+    private var current_user_name: String = "Unknown User"
+
     fun bindData(course: Course, isSubscribed: Boolean) {
+
+        val db = Firebase.firestore
+
+        db.collection(MyFirestoreReferences.USERS_COLLECTION)
+            .document(current_user_id.toString())
+            .get()
+            .addOnSuccessListener { userDocument ->
+                val firstName = userDocument.getString(MyFirestoreReferences.FIRST_NAME_FIELD) ?: ""
+                val lastName = userDocument.getString(MyFirestoreReferences.LAST_NAME_FIELD) ?: ""
+                current_user_name = "$firstName $lastName".trim()
+                Log.d("PROFILE_VIEWHOLDER", "Fetched user name: $current_user_name")
+                courseDetailsAuthorTv.text = current_user_name
+
+            }
+            .addOnFailureListener { exception ->
+                Log.e("PROFILE_VIEWHOLDER", "Error fetching user", exception)
+                courseDetailsAuthorTv.text = current_user_name
+            }
 
         courseTitleTv.text = course.courseName
         courseDetailsTv.text = course.courseDetails
-        courseDetailsAuthorTv.text = course.courseAuthor
         courseMaterialCountTv.text = "${course.materialCount} Materials"
         colorManageSubsFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(course.colorIcon))
 
