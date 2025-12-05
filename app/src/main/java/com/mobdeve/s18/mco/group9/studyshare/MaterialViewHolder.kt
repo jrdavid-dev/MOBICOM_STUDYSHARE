@@ -187,12 +187,12 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private fun addEditNotification(courseId : String, materialId : String, materialName : String){
         val db = Firebase.firestore
         db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
-            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId) // Query by course ID
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId)
             .get()
             .addOnSuccessListener { subscriptions ->
 
                 val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
-                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD) // Get user IDs
+                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD)
                 }
 
                 Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")

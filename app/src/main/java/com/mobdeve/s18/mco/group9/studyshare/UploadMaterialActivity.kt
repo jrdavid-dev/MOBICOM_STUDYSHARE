@@ -77,7 +77,7 @@ class UploadMaterialActivity : AppCompatActivity() {
         selectedFileName = null
         selectedFileSize = null
 
-        // Reset UI
+
         viewBinding.fileStatusTv.text = "Tap to Select File"
         viewBinding.fileStatusTv.setTextColor(Color.parseColor("#6B6D71"))
         viewBinding.fileInfoTv.visibility = View.VISIBLE
@@ -324,7 +324,6 @@ class UploadMaterialActivity : AppCompatActivity() {
 
         newCourseRef.set(newCourseData)
             .addOnSuccessListener {
-                // Update local map and UI
                 existingCourses[newCourseId] = courseName
                 selectedCourseId = newCourseId
 
@@ -351,7 +350,6 @@ class UploadMaterialActivity : AppCompatActivity() {
         val materialDescription = viewBinding.uploadMaterialDescriptionEV.text.toString().trim()
         val materialTopic = viewBinding.uploadMaterialTopicEv.text.toString().trim()
 
-        // ERROR HANDLING
         when {
             materialName.isEmpty() -> {
                 viewBinding.uploadMaterialTitleEv.error = "Material name is required"
@@ -376,7 +374,7 @@ class UploadMaterialActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please select a file to upload", Toast.LENGTH_SHORT).show()
             }
             else -> {
-                // All validations passed, proceed with upload
+
                 uploadMaterial(materialName, materialDescription, materialTopic)
             }
         }
@@ -390,22 +388,21 @@ class UploadMaterialActivity : AppCompatActivity() {
         val colorIcon = String.format("#%06X", 0xFFFFFF and getColor(colorResources[selectedColorPosition]))
         val materialType = materialTypes[selectedMaterialTypePosition]
 
-        // Show loading indicator
+
         viewBinding.uploadBtn.isEnabled = false
         viewBinding.uploadText.text = "Uploading..."
         viewBinding.uploadIv.setImageResource(R.drawable.load)
 
-        // Upload file to Firebase Storage
+
         val storageRef = Firebase.storage.reference
         val fileRef = storageRef.child("${MyFirestoreReferences.MATERIALS_COLLECTION}/$materialId/$selectedFileName")
 
         fileRef.putFile(selectedFileUri!!)
             .addOnSuccessListener {
-                // Get download URL
+
                 fileRef.downloadUrl.addOnSuccessListener { downloadUri ->
                     val fileUrl = downloadUri.toString()
 
-                    // Save material data to Firestore
                     saveMaterialToFirestore(
                         materialsRef,
                         materialId,
@@ -422,7 +419,6 @@ class UploadMaterialActivity : AppCompatActivity() {
                 Log.e("UPLOAD_MATERIAL", "Upload failed: ${exception.message}")
                 Toast.makeText(this, "Upload failed: ${exception.message}", Toast.LENGTH_SHORT).show()
 
-                // Reset button
                 viewBinding.uploadBtn.isEnabled = true
                 viewBinding.uploadText.text = "Upload Material"
                 viewBinding.uploadIv.setImageResource(android.R.drawable.stat_sys_upload_done)
@@ -461,7 +457,7 @@ class UploadMaterialActivity : AppCompatActivity() {
 
         materialsRef.set(materialData)
             .addOnSuccessListener {
-                // Update course material count
+
                 db.collection(MyFirestoreReferences.COURSES_COLLECTION)
                     .document(selectedCourseId!!)
                     .update(
@@ -470,7 +466,7 @@ class UploadMaterialActivity : AppCompatActivity() {
                     )
                     .addOnSuccessListener {
                         Toast.makeText(this, "Material uploaded successfully!", Toast.LENGTH_SHORT).show()
-                        finish() // Close activity after successful upload
+                        finish()
                     }
                     .addOnFailureListener { exception ->
                         Log.w("UPLOAD_MATERIAL", "Error updating course", exception)
@@ -483,7 +479,7 @@ class UploadMaterialActivity : AppCompatActivity() {
                 Log.w("UPLOAD_MATERIAL", "Error saving material", exception)
                 Toast.makeText(this, "Failed to save material data", Toast.LENGTH_SHORT).show()
 
-                // Reset button
+
                 viewBinding.uploadBtn.isEnabled = true
                 viewBinding.uploadText.text = "Upload"
                 viewBinding.uploadIv.setImageResource(android.R.drawable.stat_sys_upload_done)
@@ -513,19 +509,17 @@ class UploadMaterialActivity : AppCompatActivity() {
     private fun addNotification(materialId : String, materialName : String){
         val db = Firebase.firestore
         db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
-            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, selectedCourseId) // Query by course ID
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, selectedCourseId)
             .get()
             .addOnSuccessListener { subscriptions ->
 
                 val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
-                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD) // Get user IDs
+                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD)
                 }
 
                 Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
 
-                // Create notification for each subscribed user
                 subscribedUserIds.forEach { userId ->
-                    // Skip creating notification for the current user (the uploader)
                     if (userId != current_user_id) {
                         val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
                         val notifId = notifsRef.id

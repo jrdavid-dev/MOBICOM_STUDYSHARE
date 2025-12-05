@@ -12,7 +12,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
-import com.mobdeve.s18.mco.group9.studyshare.databinding.ActivityMainBinding
 import com.mobdeve.s18.mco.group9.studyshare.databinding.CourseDetailsBinding
 import com.mobdeve.s18.mco.group9.studyshare.models.Material
 

@@ -135,12 +135,12 @@ class NotificationsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
             .document(notification.id)
             .update(MyFirestoreReferences.IS_READ_FIELD, true)
             .addOnSuccessListener {
-                Log.d("NOTIFICATION_MARK", "✅ Successfully marked as read in Firestore")
+                Log.d("NOTIFICATION_MARK", " Successfully marked as read in Firestore")
                 notification.isRead = true
                 updateReadStatus(true)
             }
             .addOnFailureListener { exception ->
-                Log.e("NOTIFICATION_MARK", "❌ Error marking notification as read", exception)
+                Log.e("NOTIFICATION_MARK", " Error marking notification as read", exception)
             }
     }
 }

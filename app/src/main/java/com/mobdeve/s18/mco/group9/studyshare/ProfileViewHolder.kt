@@ -208,7 +208,7 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                     Log.d("EDIT_NOTIFICATION", "Are they different? ${userId != current_user_id}")
 
                     if (userId != current_user_id) {
-                        Log.d("EDIT_NOTIFICATION", "✅ Sending notification to user: $userId")
+                        Log.d("EDIT_NOTIFICATION", "Sending notification to user: $userId")
 
                         val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
                         val notifId = notifsRef.id

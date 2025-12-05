@@ -16,7 +16,7 @@ class AuthRepository {
         lastName: String,
         email: String,
         password: String,
-        onResult: (Boolean, String?, String?) -> Unit  // add uid as third param
+        onResult: (Boolean, String?, String?) -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
