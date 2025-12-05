@@ -27,6 +27,8 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
     private val current_user_id: String?
         get() = auth.currentUser?.uid
 
+    private val TAG = "MANAGE_SUBSCRIPTIONS_VIEWHOLDER"
+
     private var current_user_name: String = "Unknown User"
 
     fun bindData(course: Course, isSubscribed: Boolean) {
@@ -40,12 +42,12 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
                 val firstName = userDocument.getString(MyFirestoreReferences.FIRST_NAME_FIELD) ?: ""
                 val lastName = userDocument.getString(MyFirestoreReferences.LAST_NAME_FIELD) ?: ""
                 current_user_name = "$firstName $lastName".trim()
-                Log.d("PROFILE_VIEWHOLDER", "Fetched user name: $current_user_name")
+                Log.d(TAG, "Fetched user name: $current_user_name")
                 courseDetailsAuthorTv.text = current_user_name
 
             }
             .addOnFailureListener { exception ->
-                Log.e("PROFILE_VIEWHOLDER", "Error fetching user", exception)
+                Log.e(TAG, "Error fetching user", exception)
                 courseDetailsAuthorTv.text = current_user_name
             }
 
@@ -94,7 +96,7 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
                 subsRef.set(subData)
                     .addOnSuccessListener {  }
                     .addOnFailureListener { exception ->
-                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                        Log.w(TAG, "Error getting subscriptions", exception)
                     }
             } else {
                 //UNSUBSCRIBE
@@ -116,14 +118,14 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
                                 document.reference.delete()
                                     .addOnSuccessListener {  }
                                     .addOnFailureListener { exception ->
-                                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                                        Log.w(TAG, "Error getting subscriptions", exception)
                                     }
                             }
 
                         }
                     }
                     .addOnFailureListener { exception ->
-                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                        Log.w(TAG, "Error getting subscriptions", exception)
                     }
             }
         }

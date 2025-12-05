@@ -41,6 +41,8 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private var current_user_name: String = "Unknown User"
 
+    private val TAG = "PROFILE_VIEWHOLDER"
+
 
     fun bindData(course: Course) {
 
@@ -108,7 +110,7 @@ class ProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                         addEditNotification(course.id)
                     }
                     .addOnFailureListener { exception ->
-                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                        Log.w(TAG, "Error getting courses", exception)
                     }
             }
         }

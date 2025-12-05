@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             manageSubsTv.setOnClickListener { navigateToManageSubscriptions() }
         }
     }
-    // TODO add notif
+
     private fun navigateToProfile(){
         startActivity(Intent(this, ProfileActivity::class.java))
     }

@@ -17,6 +17,8 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.auth.FirebaseAuth
 
 class ManageSubscriptionsActivity : AppCompatActivity() {
+
+    private val TAG = "MANAGE_SUBSCRIPTIONS_ACTIVITY"
     private lateinit var manageSubscriptionAdapter: ManageSubscriptionsAdapter
     private lateinit var viewBinding: ManageSubscriptionsBinding
     private val auth by lazy { FirebaseAuth.getInstance() }
@@ -43,7 +45,7 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
     }
 
     private fun loadSubscribedCourses() {
-        currentTab = 0 // Set current tab
+        currentTab = 0
         val db = Firebase.firestore
 
         db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
@@ -65,7 +67,7 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
                 var coursesQuery: Query = coursesRef
                     .whereIn(MyFirestoreReferences.ID_FIELD, subscriptionCourseIds)
 
-                // Apply search filter if exists
+
                 if (currentSearchText.isNotEmpty()) {
                     coursesQuery = coursesQuery
                         .orderBy(MyFirestoreReferences.COURSE_NAME_FIELD)
@@ -95,10 +97,10 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
 
                 manageSubscriptionAdapter.startListening()
 
-                Log.d("MANAGE_SUBS", "Loaded ${subscriptionCourseIds.size} subscribed courses")
+                Log.d(TAG, "Loaded ${subscriptionCourseIds.size} subscribed courses")
             }
             .addOnFailureListener { exception ->
-                Log.w("MANAGE_SUBS", "Error getting subscribed courses", exception)
+                Log.w(TAG, "Error getting subscribed courses", exception)
             }
     }
 
@@ -162,14 +164,14 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
 
                         manageSubscriptionAdapter.startListening()
 
-                        Log.d("MANAGE_SUBS", "Loaded available courses (excluding subscribed and own courses)")
+                        Log.d(TAG, "Loaded available courses (excluding subscribed and own courses)")
                     }
                     .addOnFailureListener { exception ->
-                        Log.w("MANAGE_SUBS", "Error getting user's courses", exception)
+                        Log.w(TAG, "Error getting user's courses", exception)
                     }
             }
             .addOnFailureListener { exception ->
-                Log.w("MANAGE_SUBS", "Error getting available courses", exception)
+                Log.w(TAG, "Error getting available courses", exception)
             }
     }
 

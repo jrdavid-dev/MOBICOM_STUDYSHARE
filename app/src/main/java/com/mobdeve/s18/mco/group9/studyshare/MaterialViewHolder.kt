@@ -36,8 +36,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val current_user_id: String?
         get() = auth.currentUser?.uid
 
-
-    //TODO add username or query
+    private val TAG = "MATERIAL_VIEWHOLDER"
     private var current_user_name: String = "Unknown User"
 
     fun bindData(material: Material, showEditDelete : Boolean) {
@@ -58,7 +57,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 val firstName = userDocument.getString(MyFirestoreReferences.FIRST_NAME_FIELD) ?: ""
                 val lastName = userDocument.getString(MyFirestoreReferences.LAST_NAME_FIELD) ?: ""
                 current_user_name = "$firstName $lastName".trim()
-                Log.d("PROFILE_VIEWHOLDER", "Fetched user name: $current_user_name")
+                Log.d(TAG, "Fetched user name: $current_user_name")
 
                 if(showEditDelete){
                     editBtn.visibility = View.VISIBLE
@@ -77,7 +76,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.e("PROFILE_VIEWHOLDER", "Error fetching user", exception)
+                Log.e(TAG, "Error fetching user", exception)
             }
 
 
@@ -121,7 +120,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                         uploadTitleTv.text = newName
                     }
                     .addOnFailureListener { exception ->
-                        Log.w("CHANGE_ME", "Error getting courses", exception)
+                        Log.w(TAG, "Error getting courses", exception)
                     }
             }
         }
@@ -171,12 +170,12 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                                 deleteBtn.isEnabled = false
                             }
                             .addOnFailureListener { exception ->
-                                Log.e("DELETE_MATERIAL", "Error deleting material", exception)
+                                Log.e(TAG, "Error deleting material", exception)
                                 Toast.makeText(itemView.context, "Failed to delete material", Toast.LENGTH_SHORT).show()
                             }
                     }
                     .addOnFailureListener { exception ->
-                        Log.e("DELETE_MATERIAL", "Error updating course material count", exception)
+                        Log.e(TAG, "Error updating course material count", exception)
                         Toast.makeText(itemView.context, "Failed to update course", Toast.LENGTH_SHORT).show()
                     }
             }
@@ -195,7 +194,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                     subscription.getString(MyFirestoreReferences.USER_ID_FIELD)
                 }
 
-                Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
+                Log.d(TAG, "Found ${subscribedUserIds.size} subscribed users")
 
                 subscribedUserIds.forEach { userId ->
 
@@ -227,7 +226,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
+                Log.w(TAG, "Error getting subscriptions", exception)
             }
     }
 
@@ -274,7 +273,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
+                Log.w(TAG, "Error getting subscriptions", exception)
             }
     }
 

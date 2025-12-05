@@ -17,6 +17,7 @@ import com.mobdeve.s18.mco.group9.studyshare.models.Material
 
 class CourseDetailsActivity : AppCompatActivity() {
 
+    private val TAG = "COURSE_DETAILS_ACTIVITY"
     private lateinit var materialAdapter : MaterialAdapter
     private val auth by lazy { FirebaseAuth.getInstance() }
     private lateinit var viewBinding: CourseDetailsBinding
@@ -53,7 +54,7 @@ class CourseDetailsActivity : AppCompatActivity() {
 
         val query = materialsRef
             .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, courseId)
-            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .orderBy(MyFirestoreReferences.CREATED_AT_FIELD, Query.Direction.DESCENDING)
 
         val options = FirestoreRecyclerOptions.Builder<Material>()
             .setQuery(query, Material::class.java)
@@ -75,14 +76,14 @@ class CourseDetailsActivity : AppCompatActivity() {
             .document(courseId ?: return)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    Log.e("COURSE_DETAILS", "Error listening to course updates", error)
+                    Log.e(TAG, "Error listening to course updates", error)
                     return@addSnapshotListener
                 }
 
                 if (snapshot != null && snapshot.exists()) {
                     val materialCount = snapshot.getLong(MyFirestoreReferences.MATERIAL_COUNT_FIELD) ?: 0
                     viewBinding.courseDetailsTotalTv.text = "$materialCount Materials"
-                    Log.d("COURSE_DETAILS", "Material count updated to: $materialCount")
+                    Log.d(TAG, "Material count updated to: $materialCount")
                 }
             }
     }
