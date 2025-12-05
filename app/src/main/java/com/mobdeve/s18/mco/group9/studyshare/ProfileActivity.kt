@@ -78,8 +78,7 @@ class ProfileActivity : AppCompatActivity() {
                 binding.profileNameTv.text = "$firstName $lastName"
 
 
-                binding.profileDescriptionTv.text = ""
-                binding.profileBioTv.text = ""
+
             }
     }
 

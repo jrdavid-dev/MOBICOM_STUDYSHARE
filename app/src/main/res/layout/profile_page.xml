@@ -107,15 +107,7 @@
                         android:textColor="#1E293B"
                         android:textSize="22sp" />
 
-                    <TextView
-                        android:id="@+id/profileDescriptionTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text=""
-                        android:textColor="#0891B2"
-                        android:textSize="14sp" />
+
 
                     <View
                         android:layout_width="60dp"
@@ -124,16 +116,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="#E2E8F0" />
 
-                    <TextView
-                        android:id="@+id/profileBioTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:gravity="center"
-                        android:lineSpacingExtra="4dp"
-                        android:text=""
-                        android:textColor="#64748B"
-                        android:textSize="14sp" />
+
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
