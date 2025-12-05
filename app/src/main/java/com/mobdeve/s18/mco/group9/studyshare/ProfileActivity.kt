@@ -27,13 +27,32 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (current_user_id == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            redirectToLogin()
             return
         }
 
+        setupLogout()
         loadUserProfile()
         loadUserCourses()
+    }
+
+    private fun setupLogout() {
+        binding.logoutBtn.setOnClickListener {
+            auth.signOut()
+
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun redirectToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun loadUserProfile() {

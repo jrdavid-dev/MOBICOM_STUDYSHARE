@@ -3,7 +3,7 @@ package com.mobdeve.s18.mco.group9.studyshare
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s18.mco.group9.studyshare.models.User
-import java.util.Date
+
 
 
 class AuthRepository {
@@ -74,4 +74,14 @@ class AuthRepository {
                 onResult(false, null, e.message)
             }
     }
+
+    fun logoutUser(onResult: (Boolean, String?) -> Unit) {
+        try {
+            auth.signOut()
+            onResult(true, null)
+        } catch (e: Exception) {
+            onResult(false, e.message)
+        }
+    }
+
 }
