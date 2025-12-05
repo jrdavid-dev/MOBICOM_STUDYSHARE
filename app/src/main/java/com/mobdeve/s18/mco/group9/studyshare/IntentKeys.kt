@@ -13,5 +13,6 @@ enum class IntentKeys {
     MATERIAL_DATE,
     FILE_URL,
     FILE_NAME,
+    MATERIAL_DESCRIPTION
 
 }

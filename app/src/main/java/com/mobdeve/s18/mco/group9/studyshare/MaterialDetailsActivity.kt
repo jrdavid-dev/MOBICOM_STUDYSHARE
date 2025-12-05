@@ -86,11 +86,15 @@ class MaterialDetailsActivity : AppCompatActivity() {
         val colorIcon = intent.getStringExtra(IntentKeys.COLOR_ICON.name)
         val fileUrl = intent.getStringExtra(IntentKeys.FILE_URL.name)
         val fileName = intent.getStringExtra(IntentKeys.FILE_NAME.name)
+        val materialTopic = intent.getStringExtra(IntentKeys.MATERIAL_TOPIC.name)
+        val materialDescription = intent.getStringExtra(IntentKeys.MATERIAL_DESCRIPTION.name)
 
         viewBinding.materialNameTv.text = materialName
         viewBinding.materialDetailsTypeTv.text = materialType
         viewBinding.materialDetailsAuthorTv.text = materialAuthor
         viewBinding.materialDetailsDateTv.text = materialDate
+        viewBinding.materialDetailsTopicTv.text = materialTopic
+        viewBinding.materialDetailsDescriptionTv.text = materialDescription
         viewBinding.colormMaterialDetailsFrame.backgroundTintList = ColorStateList.valueOf(Color.parseColor(colorIcon))
 
         // Register the BroadcastReceiver

@@ -91,6 +91,7 @@ class MaterialViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             intent.putExtra(IntentKeys.COLOR_ICON.name, material.colorIcon)
             intent.putExtra(IntentKeys.FILE_URL.name, material.fileUrl)
             intent.putExtra(IntentKeys.FILE_NAME.name, material.fileName)
+            intent.putExtra(IntentKeys.MATERIAL_DESCRIPTION.name, material.materialDescription)
             itemView.context.startActivity(intent)
         }
 
