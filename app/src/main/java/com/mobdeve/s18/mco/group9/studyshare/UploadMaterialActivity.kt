@@ -477,6 +477,7 @@ class UploadMaterialActivity : AppCompatActivity() {
                         Toast.makeText(this, "Material uploaded but failed to update course", Toast.LENGTH_SHORT).show()
                         finish()
                     }
+                addNotification(materialId, materialName)
             }
             .addOnFailureListener { exception ->
                 Log.w("UPLOAD_MATERIAL", "Error saving material", exception)
@@ -507,5 +508,53 @@ class UploadMaterialActivity : AppCompatActivity() {
             fileSize = cursor.getLong(sizeIndex)
         }
         return fileSize
+    }
+
+    private fun addNotification(materialId : String, materialName : String){
+        val db = Firebase.firestore
+        db.collection(MyFirestoreReferences.SUBSCRIPTIONS_COLLECTION)
+            .whereEqualTo(MyFirestoreReferences.COURSE_ID_FIELD, selectedCourseId) // Query by course ID
+            .get()
+            .addOnSuccessListener { subscriptions ->
+
+                val subscribedUserIds = subscriptions.documents.mapNotNull { subscription ->
+                    subscription.getString(MyFirestoreReferences.USER_ID_FIELD) // Get user IDs
+                }
+
+                Log.d("MANAGE_SUBS", "Found ${subscribedUserIds.size} subscribed users")
+
+                // Create notification for each subscribed user
+                subscribedUserIds.forEach { userId ->
+                    // Skip creating notification for the current user (the uploader)
+                    if (userId != current_user_id) {
+                        val notifsRef = db.collection(MyFirestoreReferences.NOTIFICATIONS_COLLECTION).document()
+                        val notifId = notifsRef.id
+
+                        val type = "MATERIAL_UPLOAD"
+                        val notifData = hashMapOf(
+                            MyFirestoreReferences.ID_FIELD to notifId,
+                            MyFirestoreReferences.USER_ID_FIELD to userId,
+                            MyFirestoreReferences.COURSE_ID_FIELD to selectedCourseId,
+                            MyFirestoreReferences.TYPE_FIELD to type,
+                            MyFirestoreReferences.MATERIAL_ID_FIELD to materialId,
+                            MyFirestoreReferences.MATERIAL_NAME_FIELD to materialName,
+                            MyFirestoreReferences.AUTHOR_NAME_FIELD to current_user_name,
+                            MyFirestoreReferences.IS_READ_FIELD to false,
+                            MyFirestoreReferences.CREATED_AT_FIELD to FieldValue.serverTimestamp()
+                        )
+
+                        notifsRef.set(notifData)
+                            .addOnSuccessListener {
+                                Log.d("NOTIFICATIONS", "Notification sent to user: $userId")
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.w("NOTIFICATIONS", "Error adding notification for user: $userId", exception)
+                            }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("MANAGE_SUBS", "Error getting subscriptions", exception)
+            }
     }
 }

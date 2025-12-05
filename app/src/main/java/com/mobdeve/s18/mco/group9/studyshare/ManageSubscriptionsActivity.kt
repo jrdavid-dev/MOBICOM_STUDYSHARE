@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.Query
 import com.google.firebase.auth.FirebaseAuth
 
-
+// TODO ADD dapat walang sariling courses in the subscribe
 class ManageSubscriptionsActivity : AppCompatActivity() {
     private lateinit var manageSubscriptionAdapter: ManageSubscriptionsAdapter
     private lateinit var viewBinding: ManageSubscriptionsBinding
@@ -63,10 +63,8 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
                 }
 
                 val coursesRef = db.collection(MyFirestoreReferences.COURSES_COLLECTION)
-                var coursesQuery: Query = coursesRef.whereIn(
-                    MyFirestoreReferences.ID_FIELD,
-                    subscriptionCourseIds
-                )
+                var coursesQuery: Query = coursesRef
+                    .whereIn(MyFirestoreReferences.ID_FIELD, subscriptionCourseIds)
 
                 // Apply search filter if exists
                 if (currentSearchText.isNotEmpty()) {
@@ -123,10 +121,7 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
                     coursesRef
                 } else {
 
-                    coursesRef.whereNotIn(
-                        MyFirestoreReferences.ID_FIELD,
-                        subscriptionCourseIds
-                    )
+                    coursesRef.whereNotIn(MyFirestoreReferences.ID_FIELD, subscriptionCourseIds)
                 }
 
                 // Apply search filter if exists

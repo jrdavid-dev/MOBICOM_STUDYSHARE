@@ -61,10 +61,10 @@ public class Notification {
     public String getMaterialName() { return materialName; }
     public void setMaterialName(String materialName) { this.materialName = materialName; }
     public String getAuthorName() { return authorName; }
-    public void setAuthorName(String actorName) { this.authorName = actorName; }
+    public void setAuthorName(String authorName) { this.authorName = authorName; }
 
-    public boolean isRead() { return isRead; }
-    public void setRead(boolean read) { isRead = read; }
+    public boolean getIsRead() { return isRead; }
+    public void setIsRead(boolean isRead) { this.isRead = isRead; }
 
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
