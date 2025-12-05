@@ -36,7 +36,7 @@ class ManageSubscriptionsViewHolder(itemView: View): RecyclerView.ViewHolder(ite
         val db = Firebase.firestore
 
         db.collection(MyFirestoreReferences.USERS_COLLECTION)
-            .document(current_user_id.toString())
+            .document(course.courseAuthor)
             .get()
             .addOnSuccessListener { userDocument ->
                 val firstName = userDocument.getString(MyFirestoreReferences.FIRST_NAME_FIELD) ?: ""

@@ -161,7 +161,6 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
             }
     }
 
-
     private fun setupTabLayout() {
         viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
