@@ -16,7 +16,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.Query
 import com.google.firebase.auth.FirebaseAuth
 
-// TODO ADD dapat walang sariling courses in the subscribe
 class ManageSubscriptionsActivity : AppCompatActivity() {
     private lateinit var manageSubscriptionAdapter: ManageSubscriptionsAdapter
     private lateinit var viewBinding: ManageSubscriptionsBinding
@@ -114,52 +113,66 @@ class ManageSubscriptionsActivity : AppCompatActivity() {
 
                 val subscriptionCourseIds = subscriptions.documents.mapNotNull { subscription ->
                     subscription.getString(MyFirestoreReferences.COURSE_ID_FIELD)
-                }
+                }.toMutableList()
 
-                val coursesRef = db.collection(MyFirestoreReferences.COURSES_COLLECTION)
-                var coursesQuery: Query = if (subscriptionCourseIds.isEmpty()) {
-                    coursesRef
-                } else {
 
-                    coursesRef.whereNotIn(MyFirestoreReferences.ID_FIELD, subscriptionCourseIds)
-                }
+                db.collection(MyFirestoreReferences.COURSES_COLLECTION)
+                    .whereEqualTo(MyFirestoreReferences.COURSE_AUTHOR_FIELD, current_user_id)
+                    .get()
+                    .addOnSuccessListener { userCourses ->
 
-                // Apply search filter if exists
-                if (currentSearchText.isNotEmpty()) {
-                    coursesQuery = coursesQuery
-                        .orderBy(MyFirestoreReferences.COURSE_NAME_FIELD)
-                        .startAt(currentSearchText)
-                        .endAt(currentSearchText + "\uf8ff")
-                } else {
-                    coursesQuery = coursesQuery.orderBy(
-                        MyFirestoreReferences.CREATED_AT_FIELD,
-                        Query.Direction.DESCENDING
-                    )
-                }
 
-                val options = FirestoreRecyclerOptions.Builder<Course>()
-                    .setQuery(coursesQuery, Course::class.java)
-                    .build()
+                        val userCourseIds = userCourses.documents.mapNotNull { it.id }
+                        subscriptionCourseIds.addAll(userCourseIds)
 
-                if (::manageSubscriptionAdapter.isInitialized) {
-                    manageSubscriptionAdapter.stopListening()
-                }
+                        val coursesRef = db.collection(MyFirestoreReferences.COURSES_COLLECTION)
+                        var coursesQuery: Query = if (subscriptionCourseIds.isEmpty()) {
+                            coursesRef
+                        } else {
+                            coursesRef.whereNotIn(MyFirestoreReferences.ID_FIELD, subscriptionCourseIds)
+                        }
 
-                manageSubscriptionAdapter = ManageSubscriptionsAdapter(options, false)
+                        // Apply search filter if exists
+                        if (currentSearchText.isNotEmpty()) {
+                            coursesQuery = coursesQuery
+                                .orderBy(MyFirestoreReferences.COURSE_NAME_FIELD)
+                                .startAt(currentSearchText)
+                                .endAt(currentSearchText + "\uf8ff")
+                        } else {
+                            coursesQuery = coursesQuery.orderBy(
+                                MyFirestoreReferences.CREATED_AT_FIELD,
+                                Query.Direction.DESCENDING
+                            )
+                        }
 
-                viewBinding.manageSubscriptionsRecyclerView.itemAnimator = null
-                viewBinding.manageSubscriptionsRecyclerView.adapter = manageSubscriptionAdapter
-                viewBinding.manageSubscriptionsRecyclerView.layoutManager =
-                    LinearLayoutManager(this)
+                        val options = FirestoreRecyclerOptions.Builder<Course>()
+                            .setQuery(coursesQuery, Course::class.java)
+                            .build()
 
-                manageSubscriptionAdapter.startListening()
+                        if (::manageSubscriptionAdapter.isInitialized) {
+                            manageSubscriptionAdapter.stopListening()
+                        }
 
-                Log.d("MANAGE_SUBS", "Loaded available courses")
+                        manageSubscriptionAdapter = ManageSubscriptionsAdapter(options, false)
+
+                        viewBinding.manageSubscriptionsRecyclerView.itemAnimator = null
+                        viewBinding.manageSubscriptionsRecyclerView.adapter = manageSubscriptionAdapter
+                        viewBinding.manageSubscriptionsRecyclerView.layoutManager =
+                            LinearLayoutManager(this)
+
+                        manageSubscriptionAdapter.startListening()
+
+                        Log.d("MANAGE_SUBS", "Loaded available courses (excluding subscribed and own courses)")
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.w("MANAGE_SUBS", "Error getting user's courses", exception)
+                    }
             }
             .addOnFailureListener { exception ->
                 Log.w("MANAGE_SUBS", "Error getting available courses", exception)
             }
     }
+
 
     private fun setupTabLayout() {
         viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
